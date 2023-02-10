@@ -20,6 +20,7 @@ export class AddGalleryComponent implements OnInit {
     ProductDetailForm: FormGroup;
     images: Images[] = [];
     imageUrl: any[] = [];
+    currentIndex: number = 0;
     dataSource = new MatTableDataSource();
     @ViewChild('TABLE') table: ElementRef;
     //@ViewChild(MatPaginator) paginator: MatPaginator;
@@ -102,6 +103,11 @@ export class AddGalleryComponent implements OnInit {
     ifResetRequired() {
         this.ProductForm.controls['file'].reset();
     }
+
+    removeImage(val: number) {
+      this.imageUrl.splice(val,1)
+    }
+
     Product:any;
     onSubmit() {
         // if (this.ProductForm.invalid) {
