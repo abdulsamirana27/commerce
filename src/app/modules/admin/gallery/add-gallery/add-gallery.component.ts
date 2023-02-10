@@ -8,6 +8,8 @@ import {finalize} from "rxjs/operators";
 import {ProductService} from "../../../../services/product.service";
 import {ToastrService} from "ngx-toastr";
 import {NgxSpinnerService} from "ngx-spinner";
+import {GalleryService} from "../gallery.service";
+import {GenericService} from "../../../../services/generic.service";
 
 @Component({
   selector: 'app-add-about-us',
@@ -31,7 +33,9 @@ export class AddGalleryComponent implements OnInit {
                  private fb:FormBuilder,
                  private  productService:ProductService,
                  private toastrService:ToastrService,
-                 private spinner: NgxSpinnerService
+                 private spinner: NgxSpinnerService,
+                 private galleryService:GalleryService,
+                 private genericService:GenericService
     )
     { }
 
@@ -109,31 +113,38 @@ export class AddGalleryComponent implements OnInit {
     }
 
     Product:any;
-    onSubmit() {
-        // if (this.ProductForm.invalid) {
-        //     for (const control of Object.keys(this.ProductForm.controls)) {
-        //         this.ProductForm.controls[control].markAsTouched();
-        //     }
-        //     return;
-        // }
-        debugger
-        this.Product = Object.assign({},this.ProductForm.value)
-        this.spinner.show();
-        this.productService.addProducts(this.Product)
-            .pipe(
-                finalize(() => {
-                    this.spinner.hide();
-                })
-            )
-            .subscribe(baseResponse => {
-                if (baseResponse.Success) {
-                    this.dataSource = baseResponse.Products;
-                    this.toastrService.success(baseResponse.Message, 'Success');
-                } else {
-                    this.toastrService.error(baseResponse.Message, 'Error');
-                }
-            });
 
-    }
+
+    onSubmit()
+        {
+            if (this.currentIndex < this.images.length) {
+                if (this.images[this.currentIndex].ImageFilePath == undefined) {
+                    this.genericService
+                        .SaveMedia(this.images[this.currentIndex].file, {LinkedId:0,Type:4})
+                        .pipe(finalize(() => {
+                            // this.spinner.hide();
+                        }))
+                        .subscribe((baseResponse) => {
+                            if (baseResponse.Success) {
+                                this.currentIndex++;
+                                this.onSubmit();
+                            } else {
+                                this.spinner.hide();
+                                // this.layoutUtilsService.alertElement(
+                                //     '',
+                                //     baseResponse.Message,
+                                //     baseResponse.Code = null
+                                // );
+                            }
+                        });
+                } else {
+                    this.currentIndex++;
+                    this.onSubmit();
+                }
+            } else {
+                this.spinner.hide()
+                this.toastrService.success("Uploaded Successfully","Success")
+            }
+        }
 
 }

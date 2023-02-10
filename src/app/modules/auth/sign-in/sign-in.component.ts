@@ -91,7 +91,7 @@ export class AuthSignInComponent implements OnInit
                     debugger
                     this._authService.accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NzYwMDgyMDcsImlzcyI6IkZ1c2UiLCJleHAiOjE2NzY2MTMwMDd9.v3iGpBajnEJaj-V_c-0uqMOqmE5fLApDAswnIh-IOSA";
                     this._authService._authenticated = true;
-                    localStorage.setItem("user",baseResponse.User)
+                    localStorage.setItem("user",JSON.stringify(baseResponse.User))
                     this._userService.user = baseResponse.User;
                     // const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
 
