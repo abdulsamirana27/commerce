@@ -1,0 +1,211 @@
+/* ----------------------------------------------------------------------------------------------------- */
+/*  @ Import/write your custom styles here.
+/*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
+/* ----------------------------------------------------------------------------------------------------- */
+
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+
+@media only screen and (max-width: 600px) {
+    .cdk-overlay-pane {
+        width: 80% !important;
+    }
+}
+
+@media (min-width: 960px) {
+    .md\:rounded-none {
+        border-radius: 30px !important;
+    }
+}
+
+.location-field {
+
+    .ng-value-container{
+        padding-left: 50px !important;
+    }
+    input{
+        padding-left: 30px !important;
+        height: 45px;
+    }
+
+}
+
+.ng-select.ng-select-single .ng-select-container {
+    height: 48px !important;
+    .ng-value{
+        height: 20px;
+    }
+    background: center;
+}
+.device-select{
+    .ng-select{
+        position: relative;
+        .ng-dropdown-panel-items {
+            position: absolute;
+            width: 100%;
+            top: 0px;
+        }
+    }
+
+}
+
+
+@media  screen and (max-width: 1440px) {
+    .card-body{
+        .card-box{
+            display: grid !important;
+        }
+    }
+
+}
+
+
+.position-absolute {
+    position: relative !important;
+}
+.ngx-pagination .current {
+    padding: 0.1875rem 0.625rem;
+    background: #2F409A !important;
+    color: #fefefe;
+    cursor: default;
+}
+.text-blue{
+    color: #32409a !important;
+}
+.bg-blue{
+    background: #32409a !important;
+    color:white;
+}
+.mat-button-wrapper {
+    svg{
+        color: #32409a !important;
+
+    }
+}
+.text-white{
+    color: white !important;
+}
+
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+    box-sizing: border-box;
+    cursor: pointer;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: gray;
+
+}
+
+.row{
+    .total-btn:hover{
+        background-color: #32409a !important;
+        color: white;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        cursor: pointer;
+    }
+}
+
+
+.truncate-text{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+    -webkit-box-orient: vertical;
+}
+
+
+fuse-vertical-navigation-aside-item > .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item:not(.fuse-vertical-navigation-item-disabled).fuse-vertical-navigation-item-active, fuse-vertical-navigation-aside-item > .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item:not(.fuse-vertical-navigation-item-disabled).fuse-vertical-navigation-item-active-forced, fuse-vertical-navigation-basic-item > .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item:not(.fuse-vertical-navigation-item-disabled).fuse-vertical-navigation-item-active, fuse-vertical-navigation-basic-item > .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item:not(.fuse-vertical-navigation-item-disabled).fuse-vertical-navigation-item-active-forced, fuse-vertical-navigation-collapsable-item > .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item:not(.fuse-vertical-navigation-item-disabled).fuse-vertical-navigation-item-active, fuse-vertical-navigation-collapsable-item > .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item:not(.fuse-vertical-navigation-item-disabled).fuse-vertical-navigation-item-active-forced {
+    --tw-bg-opacity: 1;
+    background-color: #2F409A !important;
+    color: white;
+}
+body.light .mat-slide-toggle-bar, body .light .mat-slide-toggle-bar {
+    background-color: #32409a !important;
+}
+.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+    background-color: #dc3545 !important;
+
+}
+body.light .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb, body .light .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background-color: white;
+}
+
+.dash-heading{
+    background:white;
+    border-bottom: 1px solid #32409a !important;
+    padding: 4px 8px;
+    font-size: 1rem;
+}
+
+.text-green{
+    color: #32409a;
+}
+
+.radio-green [type="radio"]:checked+label:after {
+    border-color: #32409a !important;
+    background-color: #32409a !important;
+}
+//
+//.bg-green{
+//    background: #32409a  !important;
+//    color: white !important;
+//}
+.timepicker-overlay {
+    z-index: 10000000 !important;
+}
+
+.timepicker-backdrop-overlay {
+    z-index: 10000000 !important;
+}
+
+
+.truncate-button{
+    font-weight: bold;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    width: calc(100% - 25px) !important;
+}
+
+
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 6px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #2F409A !important;
+    border-radius: 6px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #2F409A !important;
+}
+
+fuse-vertical-navigation fuse-vertical-navigation-aside-item .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item, fuse-vertical-navigation fuse-vertical-navigation-basic-item .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item, fuse-vertical-navigation fuse-vertical-navigation-collapsable-item .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item, fuse-vertical-navigation fuse-vertical-navigation-divider-item .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item, fuse-vertical-navigation fuse-vertical-navigation-group-item .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item, fuse-vertical-navigation fuse-vertical-navigation-spacer-item .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 12px 20px !important;
+    font-size: 15px !important;
+    font-weight: 500;
+    line-height: 20px;
+    text-decoration: none;
+    border-radius: 6px;
+}

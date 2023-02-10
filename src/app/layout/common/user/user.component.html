@@ -1,0 +1,89 @@
+<!-- Button -->
+
+<div class="dropdown">
+    <div
+        class="relative flex self-start pt-2 pb-1 pl-3 pr-2 cursor-pointer overflow-hidden  bg-transparent"
+        matRipple
+        [matMenuTriggerFor]="projectsMenu">
+        <div class="flex items-center">
+            <div class="overflow-hidden">
+                <div class="font-medium leading-6 truncate"><b style="color: blue">admin</b></div>
+            </div>
+            <div class="flex items-center justify-center pl-2">
+                <mat-icon
+                    class="icon-size-5"
+                    [svgIcon]="'heroicons_solid:chevron-down'"></mat-icon>
+            </div>
+        </div>
+
+        <mat-menu
+            #projectsMenu="matMenu"
+            [xPosition]="'before'">
+
+            <!--            <button-->
+            <!--                class="justify-start w-full"-->
+            <!--                mat-flat-button-->
+            <!--                (click)="settings()">&nbsp;-->
+            <!--                <mat-icon>settings</mat-icon>-->
+            <!--                Settings-->
+            <!--            </button>-->
+
+            <!--            <button-->
+            <!--                class="justify-start w-full"-->
+            <!--                mat-flat-button-->
+            <!--                (click)="changePasssword()">&nbsp;-->
+            <!--                <mat-icon>lock</mat-icon>-->
+            <!--                Change Password-->
+            <!--            </button>-->
+
+            <button
+                class="justify-start w-full"
+                mat-flat-button
+                (click)="logout()">&nbsp;
+                <span class='material-icons'>logout</span>
+                LogOut
+            </button>
+        </mat-menu>
+    </div>
+
+</div>
+
+<!--<mat-menu-->
+<!--    [xPosition]="'before'"-->
+<!--    #userActions="matMenu">-->
+<!--    <button-->
+<!--        mat-menu-item-->
+<!--        (click)="signOut()">-->
+<!--        <mat-icon [svgIcon]="'heroicons_outline:logout'"></mat-icon>-->
+<!--        <span>Sign out</span>-->
+<!--    </button>-->
+<!--</mat-menu>-->
+
+<mat-menu
+    class="user-status-menu"
+    #userStatus="matMenu">
+    <button
+        mat-menu-item
+        (click)="updateUserStatus('online')">
+        <span class="w-4 h-4 mr-3 rounded-full bg-green-500"></span>
+        <span>Online</span>
+    </button>
+    <button
+        mat-menu-item
+        (click)="updateUserStatus('away')">
+        <span class="w-4 h-4 mr-3 rounded-full bg-amber-500"></span>
+        <span>Away</span>
+    </button>
+    <button
+        mat-menu-item
+        (click)="updateUserStatus('busy')">
+        <span class="w-4 h-4 mr-3 rounded-full bg-red-500"></span>
+        <span>Busy</span>
+    </button>
+    <button
+        mat-menu-item
+        (click)="updateUserStatus('not-visible')">
+        <span class="w-4 h-4 mr-3 rounded-full bg-gray-400"></span>
+        <span>Invisible</span>
+    </button>
+</mat-menu>

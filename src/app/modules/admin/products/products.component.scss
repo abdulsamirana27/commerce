@@ -1,0 +1,36 @@
+
+th , td{
+    min-width: 180px;
+    text-align: center;
+}
+
+
+th.mat-header-cell {
+    text-align: center;
+}
+
+
+.table {
+    thead {
+        min-width: 230px;
+        text-align: center;
+        color: white !important;
+    }
+}
+
+
+tbody, th {
+    color: white!important;
+    background-color: #32409a !important;
+}
+
+td{
+    min-width: 230px;
+    overflow-wrap: break-word;
+}
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+    padding: 0;
+    border-bottom-width: 0px !important;
+    border-bottom-style: solid;
+    word-break: break-all !important;
+}
