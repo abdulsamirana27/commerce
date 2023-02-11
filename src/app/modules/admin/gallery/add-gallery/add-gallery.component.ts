@@ -117,6 +117,11 @@ export class AddGalleryComponent implements OnInit {
 
     onSubmit()
         {
+            if(this.images.length==0){
+                this.toastrService.error("Attach atleast one image","Error")
+                return
+            }
+
             if (this.currentIndex < this.images.length) {
                 if (this.images[this.currentIndex].ImageFilePath == undefined) {
                     this.genericService
