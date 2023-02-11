@@ -52,6 +52,7 @@ export class ProductsComponent implements OnInit, OnDestroy
     createForm(){
         this.ProductForm = this._formBuilder.group({
             Type: [1],
+            Name: [null],
         })
     }
 
