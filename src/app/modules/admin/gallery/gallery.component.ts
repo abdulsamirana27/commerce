@@ -8,6 +8,9 @@ import {finalize} from "rxjs/operators";
 import {NgxSpinnerService} from "ngx-spinner";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {ViewFileComponent} from "../../../shared/SharedComponent/add-review/view-file.component";
+import {GalleryService} from "./gallery.service";
+import { environment } from 'environments/environment';
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -20,6 +23,7 @@ export class GalleryComponent implements OnInit, OnDestroy
     GalleryForm: FormGroup;
     imageUrl: any[] = [];
     visible: any = true;
+    baseUrl= environment.apiUrl+"/Span/";
     dataSource = new MatTableDataSource();
     @ViewChild('TABLE') table: ElementRef;
     //@ViewChild(MatPaginator) paginator: MatPaginator;
@@ -27,10 +31,11 @@ export class GalleryComponent implements OnInit, OnDestroy
 
     constructor(
         private dialogRef: MatDialog,
-        private productService: ProductService,
+        private toastrService:ToastrService,
         private spinner: NgxSpinnerService,
         private _formBuilder:FormBuilder,
         private dialog: MatDialog,
+        private galleryService: GalleryService,
                  )
     { }
 
@@ -46,21 +51,21 @@ export class GalleryComponent implements OnInit, OnDestroy
     }
     createForm(){
         this.GalleryForm = this._formBuilder.group({
-            Type: [1],
+            Type: [4],
         })
     }
 
     getGellery() {
         this.spinner.show()
-        this.productService.getProducts(this.GalleryForm.value)
+        this.galleryService.getGallery(this.GalleryForm.value)
             .pipe(
                 finalize(() => {
-                    this.spinner.hide()
+                    this.spinner.hide();
                 })
             )
             .subscribe(baseResponse => {
                 if (baseResponse.Success) {
-                   this.imageUrl = baseResponse.Products;
+                   this.imageUrl = baseResponse.GalleryData;
                     // this.layoutUtilsService.alertElementSuccess("", baseResponse.Message);
                 } else {
                     // this.layoutUtilsService.alertElement("", baseResponse.Message);
@@ -77,9 +82,24 @@ export class GalleryComponent implements OnInit, OnDestroy
 
 
 
-    removeImage(url, val: number) {
-            // this.imageid = this.images.find(temp => temp.ImageFilePath == url);
-            // this.deleteData(this.imageid['ID'], val, false);
+    removeImage(url) {
+        debugger
+        this.spinner.show()
+        this.galleryService.deleteSingleGallery(this.GalleryForm.value)
+            .pipe(
+                finalize(() => {
+                    this.spinner.hide();
+                })
+            )
+            .subscribe(baseResponse => {
+                if (baseResponse.Success) {
+                    this.toastrService.success("Deleted Successfully","Success")
+                    // this.layoutUtilsService.alertElementSuccess("", baseResponse.Message);
+                } else {
+                    this.toastrService.success("Something went wrong","Error")
+                    // this.layoutUtilsService.alertElement("", baseResponse.Message);
+                }
+            });
     }
 
 
