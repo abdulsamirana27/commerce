@@ -151,5 +151,4 @@ export class AddGalleryComponent implements OnInit {
                 this.toastrService.success("Uploaded Successfully","Success")
             }
         }
-
 }
