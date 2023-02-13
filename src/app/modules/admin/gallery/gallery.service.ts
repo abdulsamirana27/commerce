@@ -23,19 +23,7 @@ export class GalleryService{
                 `${environment.apiUrl}/Span/api/Gallery/v1/GetGalleryData`,req)
         // .pipe(map((res: any) => res));
     }
-    DeleteImage(value) {
-        let req = {
-            Gallery:value,
-            Pagination: {
-                Limit: 10,
-                Offset: 0
-            }
-        }
-        return this._httpClient
-            .post<any>(
-                `${environment.apiUrl}/Span/api/Gallery/v1/GetGalleryData`,req)
-        // .pipe(map((res: any) => res));
-    }
+
 
 
 }

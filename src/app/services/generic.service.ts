@@ -25,6 +25,21 @@ export class GenericService {
         return this.http.post<any>(`${environment.apiUrl}/Span/api/Gallery/v1/AddGalleryData`,formData);
     }
 
+    DeleteMedia(value) {
+        debugger
+        let req = {
+            Gallery:{Id:value},
+            Pagination: {
+                Limit: 10,
+                Offset: 0
+            }
+        }
+        return this.http
+            .post<any>(
+                `${environment.apiUrl}/Span/api/Gallery/v1/GetGalleryData`,req)
+        // .pipe(map((res: any) => res));
+    }
+
 
 
 }

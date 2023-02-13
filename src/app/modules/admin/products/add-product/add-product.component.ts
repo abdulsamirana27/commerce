@@ -8,6 +8,7 @@ import {finalize} from "rxjs/operators";
 import {ProductService} from "../../../../services/product.service";
 import {ToastrService} from "ngx-toastr";
 import {NgxSpinnerService} from "ngx-spinner";
+import { GenericService } from 'app/services/generic.service';
 
 @Component({
   selector: 'app-add-about-us',
@@ -29,6 +30,7 @@ export class AddProductComponent implements OnInit {
                  private _formBuilder:FormBuilder,
                  private fb:FormBuilder,
                  private  productService:ProductService,
+                 private  genericService:GenericService,
                  private toastrService:ToastrService,
                  private spinner: NgxSpinnerService
     )
@@ -60,8 +62,10 @@ export class AddProductComponent implements OnInit {
             ProductDetails: this.fb.array([]),
         });
     }
-
+    height
+    width
     onSelectFile(event) {
+        debugger
         if (this.images.length < 10) {
             if (event.target.files && event.target.files[0]) {
                 const Name = event.target.files[0].name.split('.').pop();
@@ -69,7 +73,21 @@ export class AddProductComponent implements OnInit {
                     if (Name.toLowerCase() == 'jpg' || Name.toLowerCase() == 'jpeg' || Name.toLowerCase() == 'png') {
                         const reader = new FileReader();
                         reader.onload = (event: any) => {
-                            this.imageUrl.push(event.target.result);
+                            var img = new Image();
+                            img.onload = () => {
+                                const width = img.width;
+                                const height = img.height;
+                                if(height > width || height == width){
+                                this.toastrService.error('Only landscape images are allowed', 'Error');
+                                return;
+                                }else{
+                                    this.imageUrl.push(event.target.result);
+                                }
+                            };
+
+                            // @ts-ignore
+                            img.src = reader.result;
+
                         };
                         reader.readAsDataURL(event.target.files[0]);
                         const imgFile = new Images();
@@ -121,6 +139,7 @@ export class AddProductComponent implements OnInit {
             )
             .subscribe(baseResponse => {
                 if (baseResponse.Success) {
+                    debugger
                     this.dataSource = baseResponse.Products;
                     this.toastrService.success(baseResponse.Message, 'Success');
                 } else {
@@ -128,6 +147,31 @@ export class AddProductComponent implements OnInit {
                 }
             });
 
+    }
+
+    removeImage(url, val: number) {
+        debugger
+        if (!url.includes('base64')) {
+            let image:any = this.images.find(temp => temp.ImageFilePath == url);
+            this.spinner.show();
+            this.genericService
+                .DeleteMedia(image['ID'])
+                .pipe(finalize(() => {
+                    this.spinner.hide();
+                }))
+                .subscribe((baseResponse) => {
+                    if (baseResponse.Success) {
+                        this.images.splice(val, 1);
+                        this.imageUrl.splice(val, 1);
+                        this.toastrService.success("Deleted successfully","Success")
+                    } else {
+                        this.toastrService.error("Something went wrong","Error")
+                    }
+                });
+        } else {
+            this.imageUrl.splice(val,1)
+        }
+        this.ifResetRequired()
     }
 
 }

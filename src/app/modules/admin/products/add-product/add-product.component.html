@@ -18,13 +18,14 @@
 
                 <div class="container mt-8">
                     <div class="mt-8">
+                        <div>
                         <div autocomplete="off"
                               class="mt-8"
                               [formGroup]="ProductForm">
                             <div class="row mt-8">
                                 <div class="col-lg-6">
                                     <mat-form-field class="w-full" floatLabel="always">
-                                        <mat-label>Title/Name</mat-label>
+                                            <mat-label>Title/Name</mat-label>
                                         <input
                                             matInput
                                             [formControlName]="'Name'"
@@ -57,6 +58,8 @@
                                     </mat-form-field>
                                 </div>
                             </div>
+
+                        </div>
                             <div class="bg-card">
                                 <div class="w-full mx-auto">
                                     <div class="flex flex-col px-8 sm:flex-row flex-auto sm:items-center min-w-0 my-4 sm:my-4">
@@ -68,28 +71,33 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mt-8">
-                                <div class="col-lg-6">
-                                    <mat-form-field class="w-full" floatLabel="always">
-                                        <mat-label>Title</mat-label>
-                                        <textarea matInput
-                                                  [formControlName]="'LongDescription'"
-                                                  placeholder="Long Description...">
+                            <div  [formGroup]="ProductForm" class="row py-2">
+                                <div class="col-lg-12 col-sm-12">
+                                    <input (change)="onSelectFile($event)" (click)="ifResetRequired()" accept="image/jpg, image/jpeg, image/png"
+                                           type='file'/>
+                                    <div *ngIf="imageUrl.length>0" class="mt-2 overflow-scroll"
+                                         style="display: flex !important;flex-direction: row !important;flex-wrap: wrap !important;gap: 10px">
+                                        <div *ngFor='let url of imageUrl; let i = index'>
+                                            <div class="row">
+                                                <div class="col-lg-12  text-right relative">
+                                                    <div class="bg-white float-right">
+                                                        <button type="button" (click)="removeImage(url,i)"
+                                                                class="close-button float-right absolute right-4 top-0 bg-red-500"
+                                                                mat-icon-button>
+                                                            <!-- X -->
+                                                            <mat-icon class="close-icon w-12 h-12 text-white bg-danger">close</mat-icon>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--                                (click)="previewImg(url)"-->
+                                            <div style="width: 240px; position: relative;">
+                                                <img  [src]="url">
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                        </textarea>
-                                    </mat-form-field>
                                 </div>
-                                <div class="col-lg-6">
-                                    <mat-form-field class="w-full" floatLabel="always">
-                                        <mat-label>Description</mat-label>
-                                        <textarea matInput
-                                                  [formControlName]="'LongDescription'"
-                                                  placeholder="Long Description...">
-
-                                        </textarea>
-                                    </mat-form-field>
-                                </div>
-
                             </div>
 
                         </div>

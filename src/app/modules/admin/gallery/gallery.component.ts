@@ -11,6 +11,7 @@ import {ViewFileComponent} from "../../../shared/SharedComponent/add-review/view
 import {GalleryService} from "./gallery.service";
 import { environment } from 'environments/environment';
 import {ToastrService} from "ngx-toastr";
+import {GenericService} from "../../../services/generic.service";
 
 
 @Component({
@@ -36,6 +37,7 @@ export class GalleryComponent implements OnInit, OnDestroy
         private _formBuilder:FormBuilder,
         private dialog: MatDialog,
         private galleryService: GalleryService,
+        private genericService: GenericService,
                  )
     { }
 
@@ -82,10 +84,10 @@ export class GalleryComponent implements OnInit, OnDestroy
 
 
 
-    removeImage(url) {
+    removeImage(id) {
         debugger
         this.spinner.show()
-        this.galleryService.DeleteImage(this.GalleryForm.value)
+        this.genericService.DeleteMedia(id)
             .pipe(
                 finalize(() => {
                     this.spinner.hide();

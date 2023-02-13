@@ -110,26 +110,7 @@ export class AddGalleryComponent implements OnInit {
     }
 
     removeImage(url, val: number) {
-        if (!url.includes('base64')) {
-            let image:any = this.images.find(temp => temp.ImageFilePath == url);
-            this.spinner.show();
-            this.galleryService
-                .DeleteImage(image['ID'])
-                .pipe(finalize(() => {
-                    this.spinner.hide();
-                }))
-                .subscribe((baseResponse) => {
-                    if (baseResponse.Success) {
-                        this.images.splice(val, 1);
-                        this.imageUrl.splice(val, 1);
-                        this.toastrService.success("Deleted successfully","Success")
-                    } else {
-                        this.toastrService.error("Something went wrong","Error")
-                    }
-                });
-        } else {
-            this.imageUrl.splice(val,1)
-        }
+        this.imageUrl.splice(val,1);
         this.ifResetRequired()
     }
     Product:any;
