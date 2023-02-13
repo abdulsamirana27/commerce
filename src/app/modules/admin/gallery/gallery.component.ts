@@ -85,7 +85,7 @@ export class GalleryComponent implements OnInit, OnDestroy
     removeImage(url) {
         debugger
         this.spinner.show()
-        this.galleryService.deleteSingleGallery(this.GalleryForm.value)
+        this.galleryService.DeleteImage(this.GalleryForm.value)
             .pipe(
                 finalize(() => {
                     this.spinner.hide();
@@ -94,10 +94,8 @@ export class GalleryComponent implements OnInit, OnDestroy
             .subscribe(baseResponse => {
                 if (baseResponse.Success) {
                     this.toastrService.success("Deleted Successfully","Success")
-                    // this.layoutUtilsService.alertElementSuccess("", baseResponse.Message);
                 } else {
                     this.toastrService.success("Something went wrong","Error")
-                    // this.layoutUtilsService.alertElement("", baseResponse.Message);
                 }
             });
     }

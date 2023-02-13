@@ -23,7 +23,7 @@ export class GalleryService{
                 `${environment.apiUrl}/Span/api/Gallery/v1/GetGalleryData`,req)
         // .pipe(map((res: any) => res));
     }
-    deleteSingleGallery(value) {
+    DeleteImage(value) {
         let req = {
             Gallery:value,
             Pagination: {
@@ -36,5 +36,6 @@ export class GalleryService{
                 `${environment.apiUrl}/Span/api/Gallery/v1/GetGalleryData`,req)
         // .pipe(map((res: any) => res));
     }
+
 
 }

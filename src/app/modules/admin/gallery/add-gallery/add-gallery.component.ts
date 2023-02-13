@@ -51,6 +51,7 @@ export class AddGalleryComponent implements OnInit {
 
     }
 
+
     review(){
         this.ProductForm = this._formBuilder.group({
             Name: [null, [Validators.required]],
@@ -108,10 +109,29 @@ export class AddGalleryComponent implements OnInit {
         this.ProductForm.controls['file'].reset();
     }
 
-    removeImage(val: number) {
-      this.imageUrl.splice(val,1)
+    removeImage(url, val: number) {
+        if (!url.includes('base64')) {
+            let image:any = this.images.find(temp => temp.ImageFilePath == url);
+            this.spinner.show();
+            this.galleryService
+                .DeleteImage(image['ID'])
+                .pipe(finalize(() => {
+                    this.spinner.hide();
+                }))
+                .subscribe((baseResponse) => {
+                    if (baseResponse.Success) {
+                        this.images.splice(val, 1);
+                        this.imageUrl.splice(val, 1);
+                        this.toastrService.success("Deleted successfully","Success")
+                    } else {
+                        this.toastrService.error("Something went wrong","Error")
+                    }
+                });
+        } else {
+            this.imageUrl.splice(val,1)
+        }
+        this.ifResetRequired()
     }
-
     Product:any;
 
 
