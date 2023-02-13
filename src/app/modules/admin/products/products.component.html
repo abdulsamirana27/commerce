@@ -22,8 +22,8 @@
     <div class="sm:col-span-2 lg:col-span-3  flex flex-col mt-3 my-8 ml-5 mr-5">
         <div class="overflow-x-auto w-full">
 
-            <div class="overflow-auto bg-white border example-container mat-elevation-z8 mt-2 mb-2">
-                <form class="mx-2">
+            <div class="overflow-auto bg-white border example-container mat-elevation-z8 my-2 py-2">
+                <form [formGroup]="ProductForm" class="mx-2">
                     <div class="col-lg-3">
                         <mat-form-field class="w-full" floatLabel="always">
                             <mat-label>Name</mat-label>
@@ -37,6 +37,16 @@
 <!--                        </mat-error>-->
                     </div>
                 </form>
+
+                <div class="flex">
+                    <button
+                        class="mx-2"
+                        style="background-color: #32409a !important; color: white !important;"
+                        mat-stroked-button (click)="getProducts()">
+                        <mat-icon style="color: white !important;">search</mat-icon>
+                        Search
+                    </button>
+                </div>
             </div>
             <div class="overflow-auto bg-white border example-container mat-elevation-z8" #TABLE style="height: 60vh;">
                 <table class="w-full" mat-table #table [dataSource]="dataSource">

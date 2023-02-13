@@ -5,6 +5,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {ProductService} from "../../../services/product.service";
 import {finalize} from "rxjs/operators";
 import {NgxSpinnerService} from "ngx-spinner";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 
 @Component({
@@ -15,6 +16,7 @@ import {NgxSpinnerService} from "ngx-spinner";
 export class AboutUsComponent implements OnInit, OnDestroy
 {
     products:any;
+    aboutUsForm: FormGroup
     displayedColumns: string[] =
         [
             'index',
@@ -30,6 +32,7 @@ export class AboutUsComponent implements OnInit, OnDestroy
     constructor(
         private dialogRef: MatDialog,
         private productService: ProductService,
+        private fb: FormBuilder,
         private spinner: NgxSpinnerService
                  )
     { }
@@ -38,9 +41,16 @@ export class AboutUsComponent implements OnInit, OnDestroy
         this.dataSource.paginator = this.paginator;
     }
 
+    createForm(){
+        this.aboutUsForm = this.fb.group({
+            Name:[null]
+        })
+    }
+
     ngOnInit(): void
     {
         this.getProducts();
+        this.createForm()
     }
 
     getProducts(value=null) {
