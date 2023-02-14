@@ -16,12 +16,10 @@ export class ViewFileComponent implements OnInit {
     }
 url
     ngOnInit() {
-debugger
-
         this.url =  this.data
     }
 
     onClose() {
-
+    this.dialogRef.close()
     }
 }

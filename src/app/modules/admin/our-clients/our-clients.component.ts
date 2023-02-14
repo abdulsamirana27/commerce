@@ -1,28 +1,26 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
-import {AddReviewComponent} from "../reviews/add-review/add-review.component";
 import {MatDialog} from "@angular/material/dialog";
-import {ProductService} from "../../../services/product.service";
 import {finalize} from "rxjs/operators";
 import {NgxSpinnerService} from "ngx-spinner";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {ClientsService} from "../../../services/clients.service";
 
 
 @Component({
-    selector       : 'products',
-    templateUrl    : './products.component.html',
-    styleUrls: ['./products.component.scss']
+    selector       : 'our-clients',
+    templateUrl    : './our-clients.component.html',
+    styleUrls: ['./our-clients.component.scss']
 })
-export class ProductsComponent implements OnInit, OnDestroy
+export class OurClientsComponent implements OnInit, OnDestroy
 {
-    ProductForm: FormGroup;
+    ClientForm: FormGroup;
     products:any;
     displayedColumns: string[] =
         [
             'index',
             'Name',
-            'ShortDescription',
             'action',
         ];
     dataSource = new MatTableDataSource();
@@ -32,7 +30,7 @@ export class ProductsComponent implements OnInit, OnDestroy
 
     constructor(
         private dialogRef: MatDialog,
-        private productService: ProductService,
+        private clientsService: ClientsService,
         private spinner: NgxSpinnerService,
         private _formBuilder:FormBuilder,
                  )
@@ -45,20 +43,20 @@ export class ProductsComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         this.createForm()
-        this.getProducts();
+        this.getClients();
 
     }
 
     createForm(){
-        this.ProductForm = this._formBuilder.group({
+        this.ClientForm = this._formBuilder.group({
             Type: [2],
             Name: [null],
         })
     }
 
-    getProducts() {
+    getClients() {
         this.spinner.show()
-        this.productService.getProducts(this.ProductForm.value)
+        this.clientsService.getClients(this.ClientForm.value)
             .pipe(
                 finalize(() => {
                     this.spinner.hide()

@@ -1,42 +1,37 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component,  OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
-import {MatPaginator} from "@angular/material/paginator";
 import {Images} from "../../../../model/images.model";
 import {finalize} from "rxjs/operators";
-import {ProductService} from "../../../../services/product.service";
 import {ToastrService} from "ngx-toastr";
 import {NgxSpinnerService} from "ngx-spinner";
 import { GenericService } from 'app/services/generic.service';
 import {ActivatedRoute, Router} from "@angular/router";
 import {environment} from "../../../../../environments/environment";
 import {ViewFileComponent} from "../../../../shared/SharedComponent/add-review/view-file.component";
+import {ClientsService} from "../../../../services/clients.service";
 
 @Component({
   selector: 'app-add-about-us',
-  templateUrl: './add-product.component.html',
-  styleUrls: ['./add-product.component.scss']
+  templateUrl: './add-client.component.html',
+  styleUrls: ['./add-client.component.scss']
 })
-export class AddProductComponent implements OnInit {
-    Title="Add Products"
+export class AddClientComponent implements OnInit {
+    Title="Add Client"
     height
     width
     currentIndex: number = 0;
-    Product:any;
+    Client:any;
     baseUrl= environment.apiUrl+"/Span/Documents/";
-    ProductForm: FormGroup;
+    ClientForm: FormGroup;
     subDesc: FormGroup;
-    ProductDetailForm: FormGroup;
     images: Images[] = [];
     imageUrl: any[] = [];
-    @ViewChild('TABLE') table: ElementRef;
-    //@ViewChild(MatPaginator) paginator: MatPaginator;
-    @ViewChild('MatPaginator', {static: false}) paginator: MatPaginator;
 
     constructor( private dialog: MatDialog,
                  private _formBuilder:FormBuilder,
                  private fb:FormBuilder,
-                 private  productService:ProductService,
+                 private  clientsService:ClientsService,
                  private  genericService:GenericService,
                  private toastrService:ToastrService,
                  private spinner: NgxSpinnerService,
@@ -47,41 +42,29 @@ export class AddProductComponent implements OnInit {
 
     ngOnInit(): void
     {
-        this.productForm();
-        this.ProductDetailsForm();
+        this.clientForm();
         this.route.params.subscribe(
             params => {
                if(params['id']){
-                   this.Title="Update Products"
-                   this.ProductForm.controls["Id"].setValue(params['id']);
+                   this.Title="Update Client"
+                   this.ClientForm.controls["Id"].setValue(params['id']);
                    this.getProducts()
                }
             }
         )
-
-
     }
 
-    productForm(){
-        this.ProductForm = this._formBuilder.group({
+    clientForm(){
+        this.ClientForm = this._formBuilder.group({
             Id:[null],
             Name: [null, [Validators.required]],
-            ShortDescription: [null, [Validators.required]],
-            LongDescription: [null, [Validators.required]],
-            file: [null],
             Type: [2],
         })
     }
 
-    ProductDetailsForm(){
-        this.ProductDetailForm = this.fb.group({
-            ProductDetails: this.fb.array([]),
-        });
-    }
-
     onSelectFile(event) {
         debugger
-        if (this.images.length < 10) {
+        if (this.images.length < 1) {
             if (event.target.files && event.target.files[0]) {
                 const Name = event.target.files[0].name.split('.').pop();
                 if (Name != undefined) {
@@ -113,14 +96,14 @@ export class AddProductComponent implements OnInit {
                 }
             }
         } else {
-            this.toastrService.error('Maximum 10 Images are allowed', 'Error');
+            this.toastrService.error('Maximum 1 Images is allowed', 'Error');
             return;
         }
     }
 
     hasError(controlName: string, errorName: string): boolean {
-        if(this.ProductForm.touched)
-        return this.ProductForm.controls[controlName].hasError(errorName);
+        if(this.ClientForm.touched)
+        return this.ClientForm.controls[controlName].hasError(errorName);
     }
 
     ngOnDestroy(): void
@@ -131,23 +114,23 @@ export class AddProductComponent implements OnInit {
     }
 
     ifResetRequired() {
-        this.ProductForm.controls['file'].reset();
+        this.ClientForm.controls['file'].reset();
     }
     onSubmit() {
-        if (this.ProductForm.invalid) {
-            for (const control of Object.keys(this.ProductForm.controls)) {
-                this.ProductForm.controls[control].markAsTouched();
+        if (this.ClientForm.invalid) {
+            for (const control of Object.keys(this.ClientForm.controls)) {
+                this.ClientForm.controls[control].markAsTouched();
             }
             return;
         }
+
         if(this.images.length==0){
             this.toastrService.error("Attach atleast one image","Error")
             return
         }
-        debugger
-        this.Product = Object.assign({},this.ProductForm.value)
+        this.Client = Object.assign({},this.ClientForm.value)
         this.spinner.show();
-        this.productService.addProducts(this.Product)
+        this.clientsService.addClient(this.images[0],this.Client)
             .pipe(
                 finalize(() => {
                     this.spinner.hide();
@@ -156,7 +139,7 @@ export class AddProductComponent implements OnInit {
             .subscribe(baseResponse => {
                 if (baseResponse.Success) {
                     debugger
-                    this.Product["Id"] = baseResponse.Product.Id;
+                    this.Client["Id"] = baseResponse.Client.Id;
                     this.SaveMedia()
                 } else {
                     this.toastrService.error(baseResponse.Message, 'Error');
@@ -191,7 +174,7 @@ export class AddProductComponent implements OnInit {
     }
     getProducts() {
         this.spinner.show()
-        this.productService.getProducts(this.ProductForm.value)
+        this.clientsService.getClients(this.ClientForm.value)
             .pipe(
                 finalize(() => {
                     this.spinner.hide()
@@ -199,9 +182,7 @@ export class AddProductComponent implements OnInit {
             )
             .subscribe(baseResponse => {
                 if (baseResponse.Success) {
-                    debugger
-                    this.ProductForm.patchValue(baseResponse.Products[0]);
-                    this.ProductDetailForm.patchValue(baseResponse.Products[0].ProductDetails);
+                    this.ClientForm.patchValue(baseResponse.Products[0]);
                     baseResponse.Products[0]?.GalleryDetails?.forEach((element)=>{
                         let single = element;
                         single.GalleryPath=this.baseUrl+element.GalleryPath;
@@ -213,11 +194,10 @@ export class AddProductComponent implements OnInit {
     }
     SaveMedia()
     {
-
-        if (this.currentIndex < this.images.length) {
+       if (this.currentIndex < this.images.length) {
             if (this.images[this.currentIndex].GalleryPath == undefined) {
                 this.genericService
-                    .SaveMedia(this.images[this.currentIndex].file, {LinkedId:this.Product.Id,Type:2})
+                    .SaveMedia(this.images[this.currentIndex].file, {LinkedId:this.Client.Id,Type:2})
                     .pipe(finalize(() => {
                         // this.spinner.hide();
                     }))
@@ -241,10 +221,9 @@ export class AddProductComponent implements OnInit {
         } else {
             this.spinner.hide()
             this.toastrService.success("Uploaded Successfully","Success");
-            this._router.navigateByUrl("/products");
+            this._router.navigateByUrl("/clients");
         }
     }
-
     previewImg(url) {
         const dialogRef = this.dialog.open(ViewFileComponent, {
             width: '70%',

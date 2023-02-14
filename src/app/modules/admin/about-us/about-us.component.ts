@@ -63,8 +63,7 @@ export class AboutUsComponent implements OnInit, OnDestroy
             )
             .subscribe(baseResponse => {
                 if (baseResponse.Success) {
-                    this.dataSource = baseResponse.Products;
-                    // this.layoutUtilsService.alertElementSuccess("", baseResponse.Message);
+
                 } else {
                     // this.layoutUtilsService.alertElement("", baseResponse.Message);
                 }

@@ -5,16 +5,16 @@
             <div class="flex flex-col px-8 sm:flex-row flex-auto sm:items-center min-w-0 my-4 sm:my-4">
                 <div class="flex flex-auto items-center min-w-0">
                     <div class="text-2xl font-semibold md:text-2xl tracking-tight leading-7 md:leading-snug truncate">
-                        <b>Products</b>
+                        <b>Project</b>
                     </div>
                 </div>
                 <!--Actions -->
                 <button
                     class="mr-2"
                     style="background-color: #32409a !important; color: white !important;"
-                    mat-stroked-button routerLink="/products/add">
+                    mat-stroked-button routerLink="/projects/add">
                     <mat-icon style="color: white !important;">add</mat-icon>
-                    Add Product
+                    Add Project
                 </button>
             </div>
         </div>
@@ -77,7 +77,7 @@
                             <button mat-icon-button
                                     matTooltip="Click to Update"
                                     class="iconbutton"
-                                    [routerLink]="['/products/update',element.Id]">
+                                    [routerLink]="['/projects/update',element.Id]">
                                 <mat-icon style="color: #32409a !important">edit</mat-icon>
                             </button>
                         </td>

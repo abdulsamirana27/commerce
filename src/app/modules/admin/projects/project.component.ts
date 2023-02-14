@@ -7,14 +7,15 @@ import {ProductService} from "../../../services/product.service";
 import {finalize} from "rxjs/operators";
 import {NgxSpinnerService} from "ngx-spinner";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {GenericService} from "../../../services/generic.service";
 
 
 @Component({
     selector       : 'products',
-    templateUrl    : './products.component.html',
-    styleUrls: ['./products.component.scss']
+    templateUrl    : './project.component.html',
+    styleUrls: ['./project.component.scss']
 })
-export class ProductsComponent implements OnInit, OnDestroy
+export class ProjectComponent implements OnInit, OnDestroy
 {
     ProductForm: FormGroup;
     products:any;
@@ -32,7 +33,7 @@ export class ProductsComponent implements OnInit, OnDestroy
 
     constructor(
         private dialogRef: MatDialog,
-        private productService: ProductService,
+        private genericService: GenericService,
         private spinner: NgxSpinnerService,
         private _formBuilder:FormBuilder,
                  )
@@ -51,14 +52,14 @@ export class ProductsComponent implements OnInit, OnDestroy
 
     createForm(){
         this.ProductForm = this._formBuilder.group({
-            Type: [2],
+            Type: [1],
             Name: [null],
         })
     }
 
     getProducts() {
         this.spinner.show()
-        this.productService.getProducts(this.ProductForm.value)
+        this.genericService.getProducts(this.ProductForm.value)
             .pipe(
                 finalize(() => {
                     this.spinner.hide()
@@ -73,15 +74,8 @@ export class ProductsComponent implements OnInit, OnDestroy
                 }
             });
     }
-
+delete(){}
     ngOnDestroy(): void
     { }
 
-    delete() {
-
-    }
-
-    update() {
-
-    }
 }

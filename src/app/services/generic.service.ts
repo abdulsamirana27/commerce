@@ -13,30 +13,47 @@ export class GenericService {
         private _userService:UserService,
     ) {
     }
+     user = JSON.parse(localStorage.getItem("user"));
 
     SaveMedia(file, Data) {
         debugger
         var formData = new FormData();
-       let user = JSON.parse(localStorage.getItem("user"));
+
         formData.append('LinkedId', Data.LinkedId);
         formData.append('Type', Data.Type);
-        formData.append('UserId', user["UserId"]);
+        formData.append('UserId', this.user["UserId"]);
         formData.append('File', file);
         return this.http.post<any>(`${environment.apiUrl}/Span/api/Gallery/v1/AddGalleryData`,formData);
     }
 
-    DeleteMedia(value) {
+    DeleteMedia(Id) {
         debugger
         let req = {
-            Gallery:{Id:value},
-            Pagination: {
-                Limit: 10,
-                Offset: 0
-            }
+            Id:Id,
+            UserId:this.user["UserId"]
         }
         return this.http
             .post<any>(
-                `${environment.apiUrl}/Span/api/Gallery/v1/GetGalleryData`,req)
+                `${environment.apiUrl}/Span/api/Gallery/v1/DeleteGalleryData`,req)
+        // .pipe(map((res: any) => res));
+    }
+    getProducts(value) {
+
+        return this.http
+            .post<any>(
+                `${environment.apiUrl}/Span/api/Product/v1/GetProducts`,value)
+        // .pipe(map((res: any) => res));
+    }
+
+
+    addProducts(product) {
+        let req={
+            User: {
+                UserId:this.user["UserId"]
+            },Product:product};
+        return this.http
+            .post<any>(
+                `${environment.apiUrl}/Span/api/Product/v1/AddUpdateProduct`,req)
         // .pipe(map((res: any) => res));
     }
 

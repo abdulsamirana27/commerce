@@ -10,6 +10,7 @@ import {ToastrService} from "ngx-toastr";
 import {NgxSpinnerService} from "ngx-spinner";
 import {GalleryService} from "../gallery.service";
 import {GenericService} from "../../../../services/generic.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-about-us',
@@ -17,6 +18,8 @@ import {GenericService} from "../../../../services/generic.service";
   styleUrls: ['./add-gallery.component.scss']
 })
 export class AddGalleryComponent implements OnInit {
+
+    Product:any;
     ProductForm: FormGroup;
     subDesc: FormGroup;
     ProductDetailForm: FormGroup;
@@ -35,14 +38,11 @@ export class AddGalleryComponent implements OnInit {
                  private toastrService:ToastrService,
                  private spinner: NgxSpinnerService,
                  private galleryService:GalleryService,
-                 private genericService:GenericService
+                 private genericService:GenericService,
+                 private _router:Router
     )
     { }
 
-
-    ngAfterViewInit(): void {
-        this.dataSource.paginator = this.paginator;
-    }
 
     ngOnInit(): void
     {
@@ -113,7 +113,6 @@ export class AddGalleryComponent implements OnInit {
         this.imageUrl.splice(val,1);
         this.ifResetRequired()
     }
-    Product:any;
 
 
     onSubmit()
@@ -124,7 +123,7 @@ export class AddGalleryComponent implements OnInit {
             }
 
             if (this.currentIndex < this.images.length) {
-                if (this.images[this.currentIndex].ImageFilePath == undefined) {
+                if (this.images[this.currentIndex].GalleryPath == undefined) {
                     this.genericService
                         .SaveMedia(this.images[this.currentIndex].file, {LinkedId:0,Type:4})
                         .pipe(finalize(() => {
@@ -149,7 +148,8 @@ export class AddGalleryComponent implements OnInit {
                 }
             } else {
                 this.spinner.hide()
-                this.toastrService.success("Uploaded Successfully","Success")
+                this.toastrService.success("Uploaded Successfully","Success");
+                this._router.navigateByUrl("/gallery");
             }
         }
 }

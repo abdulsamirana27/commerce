@@ -1,5 +1,5 @@
 export class Images {
-    ID: number;
-    ImageFilePath: string;
+    Id: number;
     file: File;
+    GalleryPath: any;
 }

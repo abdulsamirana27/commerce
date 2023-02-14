@@ -19,11 +19,25 @@ export const defaultNavigation: FuseNavigationItem[] = [
             link : '/products'
     },
     {
+        id   : 'projects',
+        title: 'Projects',
+        type : 'basic',
+        icon : 'heroicons_outline:document-duplicate',
+        link : '/projects'
+    },
+    {
+        id   : 'ourClient',
+        title: 'Our Client',
+        type : 'basic',
+        icon : 'heroicons_outline:document-duplicate',
+        link : '/clients'
+    },
+    {
         id   : 'about us',
         title: 'About Us',
         type : 'basic',
         icon : 'heroicons_outline:document-duplicate',
-        link : '/about-us'
+        link : '/about-us/add'
     },
     {
         id   : 'gallery',

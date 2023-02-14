@@ -6,7 +6,7 @@ import {environment} from 'environments/environment';
     providedIn: 'root',
 })
 export class ProductService {
-
+    user = JSON.parse(localStorage.getItem("user"));
     constructor(
         private http: HttpClient,
     ) {
@@ -23,8 +23,8 @@ export class ProductService {
 
     addProducts(product) {
        let req={
-           "User": {
-               "UserId": "1"
+           User: {
+               UserId:this.user["UserId"]
            },Product:product};
         return this.http
             .post<any>(
