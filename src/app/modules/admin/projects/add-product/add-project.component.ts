@@ -9,7 +9,7 @@ import {NgxSpinnerService} from "ngx-spinner";
 import { GenericService } from 'app/services/generic.service';
 import {ActivatedRoute, Router} from "@angular/router";
 import {environment} from "../../../../../environments/environment";
-import {ViewFileComponent} from "../../../../shared/SharedComponent/add-review/view-file.component";
+import {ViewFileComponent} from "../../../../shared/SharedComponent/view-file/view-file.component";
 
 @Component({
   selector: 'app-add-project-us',
@@ -113,7 +113,7 @@ export class AddProjectComponent implements OnInit {
     }
 
     hasError(controlName: string, errorName: string): boolean {
-        if(this.ProductForm.touched)
+        if(this.ProductForm.controls[controlName].touched)
         return this.ProductForm.controls[controlName].hasError(errorName);
     }
 
@@ -228,7 +228,7 @@ export class AddProjectComponent implements OnInit {
         } else {
             this.spinner.hide()
             this.toastrService.success("Uploaded Successfully","Success");
-            this._router.navigateByUrl("/products");
+            this._router.navigateByUrl("/projects");
         }
     }
     previewImg(url) {

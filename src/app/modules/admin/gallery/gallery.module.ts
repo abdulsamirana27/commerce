@@ -19,7 +19,7 @@ import {GalleryComponent} from "./gallery.component";
 import {productsRoutes} from "./gallery.routing";
 import {AddGalleryComponent} from "./add-gallery/add-gallery.component";
 import {AngularImageViewerModule} from "@hreimer/angular-image-viewer";
-import {ViewFileComponent} from "../../../shared/SharedComponent/add-review/view-file.component";
+import {ViewFileComponent} from "../../../shared/SharedComponent/view-file/view-file.component";
 
 @NgModule({
     declarations: [

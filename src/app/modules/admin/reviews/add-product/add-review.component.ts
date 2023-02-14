@@ -10,20 +10,21 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {environment} from "../../../../../environments/environment";
 import {ViewFileComponent} from "../../../../shared/SharedComponent/view-file/view-file.component";
 import {ClientsService} from "../../../../services/clients.service";
+import {ReviewService} from "../../../../services/review.service";
 
 @Component({
   selector: 'app-add-about-us',
-  templateUrl: './add-client.component.html',
-  styleUrls: ['./add-client.component.scss']
+  templateUrl: './add-review.component.html',
+  styleUrls: ['./add-review.component.scss']
 })
-export class AddClientComponent implements OnInit {
-    Title="Add Client"
+export class AddReviewComponent implements OnInit {
+    Title="Add Review"
     height
     width
     currentIndex: number = 0;
-    Client:any;
+    Review:any;
     baseUrl= environment.apiUrl+"/Span/Documents/";
-    ClientForm: FormGroup;
+    ReviewForm: FormGroup;
     subDesc: FormGroup;
     images: Images[] = [];
     imageUrl: any[] = [];
@@ -31,8 +32,8 @@ export class AddClientComponent implements OnInit {
     constructor( private dialog: MatDialog,
                  private _formBuilder:FormBuilder,
                  private fb:FormBuilder,
-                 private  clientsService:ClientsService,
                  private  genericService:GenericService,
+                 private  reviewService:ReviewService,
                  private toastrService:ToastrService,
                  private spinner: NgxSpinnerService,
                  private route: ActivatedRoute,
@@ -42,24 +43,25 @@ export class AddClientComponent implements OnInit {
 
     ngOnInit(): void
     {debugger
-        this.clientForm();
+        this.reviewForm();
         this.route.params.subscribe(
             params => {
                if(params['id']){
-                   this.Title="Update Client"
-                   this.ClientForm.controls["Id"].setValue(params['id']);
-                   this.getClients()
+                   this.Title="Update Review"
+                   this.ReviewForm.controls["Id"].setValue(params['id']);
+                   this.getReview()
                }
             }
         )
     }
 
-    clientForm(){
-        this.ClientForm = this._formBuilder.group({
+    reviewForm(){
+        this.ReviewForm = this._formBuilder.group({
             Id:[null],
             ClientName: [null, [Validators.required]],
+            ShortReview: [null, [Validators.required]],
+            DetailedReview: [null, [Validators.required]],
             file:[null],
-            Type: [2],
         })
     }
 
@@ -103,8 +105,9 @@ export class AddClientComponent implements OnInit {
     }
 
     hasError(controlName: string, errorName: string): boolean {
-        if(this.ClientForm.controls[controlName].touched)
-        return this.ClientForm.controls[controlName].hasError(errorName);
+        debugger
+        if(this.ReviewForm.controls[controlName].touched)
+        return this.ReviewForm.controls[controlName].hasError(errorName);
     }
 
     ngOnDestroy(): void
@@ -115,12 +118,12 @@ export class AddClientComponent implements OnInit {
     }
 
     ifResetRequired() {
-        this.ClientForm.controls['file'].reset();
+        this.ReviewForm.controls['file'].reset();
     }
     onSubmit() {
-        if (this.ClientForm.invalid) {
-            for (const control of Object.keys(this.ClientForm.controls)) {
-                this.ClientForm.controls[control].markAsTouched();
+        if (this.ReviewForm.invalid) {
+            for (const control of Object.keys(this.ReviewForm.controls)) {
+                this.ReviewForm.controls[control].markAsTouched();
             }
             return;
         }
@@ -129,9 +132,9 @@ export class AddClientComponent implements OnInit {
             this.toastrService.error("Attach atleast one image","Error")
             return
         }
-        this.Client = Object.assign({},this.ClientForm.value)
+        this.Review = Object.assign({},this.ReviewForm.value)
         this.spinner.show();
-        this.clientsService.addClient(this.images[0].file,this.Client)
+        this.reviewService.addReview(this.images[0].file,this.Review)
             .pipe(
                 finalize(() => {
                     this.spinner.hide();
@@ -140,7 +143,7 @@ export class AddClientComponent implements OnInit {
             .subscribe(baseResponse => {
                 if (baseResponse.Success) {
                     this.toastrService.success("Uploaded Successfully","Success");
-                    this._router.navigateByUrl("/clients");
+                    this._router.navigateByUrl("/reviews");
                 } else {
                     this.toastrService.error(baseResponse.Message, 'Error');
                 }
@@ -172,9 +175,9 @@ export class AddClientComponent implements OnInit {
         }
         this.ifResetRequired()
     }
-    getClients() {
+    getReview() {
         this.spinner.show()
-        this.clientsService.getClients(this.ClientForm.value)
+        this.reviewService.getReviews(this.ReviewForm.value)
             .pipe(
                 finalize(() => {
                     this.spinner.hide()
@@ -182,9 +185,8 @@ export class AddClientComponent implements OnInit {
             )
             .subscribe(baseResponse => {
                 if (baseResponse.Success) {
-                    debugger
-                    this.ClientForm.patchValue(baseResponse.Clients[0]);
-                    baseResponse.Clients?.forEach((element)=>{
+                    this.ReviewForm.patchValue(baseResponse.Reviews[0]);
+                    baseResponse.Reviews?.forEach((element)=>{
                         let single = element;
                         if(single.ClientImage!="") {
                             single.ClientImage = this.baseUrl + element.ClientImage;

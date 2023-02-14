@@ -5,28 +5,29 @@ import {environment} from 'environments/environment';
 @Injectable({
     providedIn: 'root',
 })
-export class ClientsService {
+export class ReviewService {
     user = JSON.parse(localStorage.getItem("user"));
     constructor(
         private http: HttpClient,
     ) {
     }
 
-    getClients(req) {
-        debugger
+    getReviews(req) {
         return this.http
             .post<any>(
-                `${environment.apiUrl}/Span/api/OurClient/v1/GetClients`,req);
+                `${environment.apiUrl}/Span/api/Review/v1/GetReviews`,req);
     }
 
 
-    addClient(file,client) {
+    addReview(file,client) {
         debugger
         var formData = new FormData();
         formData.append('ClientName', client.ClientName);
+        formData.append('ShortReview', client.ShortReview);
+        formData.append('DetailedReview', client.DetailedReview);
         formData.append('UserId', this.user["UserId"]);
         formData.append('File', file);
-        return this.http.post<any>(`${environment.apiUrl}/Span/api/OurClient/v1/AddUpdateClient`,formData);
+        return this.http.post<any>(`${environment.apiUrl}/Span/api/Review/v1/AddUpdateReview`,formData);
     }
 
 }

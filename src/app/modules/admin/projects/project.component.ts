@@ -1,9 +1,7 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
-import {AddReviewComponent} from "../reviews/add-review/add-review.component";
 import {MatDialog} from "@angular/material/dialog";
-import {ProductService} from "../../../services/product.service";
 import {finalize} from "rxjs/operators";
 import {NgxSpinnerService} from "ngx-spinner";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";

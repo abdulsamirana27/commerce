@@ -11,7 +11,7 @@ import {NgxSpinnerService} from "ngx-spinner";
 import {ActivatedRoute,  Router} from "@angular/router";
 import {GenericService} from "../../../../services/generic.service";
 import {environment} from "../../../../../environments/environment";
-import {ViewFileComponent} from "../../../../shared/SharedComponent/add-review/view-file.component";
+import {ViewFileComponent} from "../../../../shared/SharedComponent/view-file/view-file.component";
 
 @Component({
   selector: 'app-add-about-us',
@@ -68,7 +68,7 @@ export class AddAboutUsComponent implements OnInit {
                 if (baseResponse.Success) {
                     debugger
                     this.AboutUsForm.patchValue(baseResponse.Products[0]);
-                    baseResponse.Products[0].ProductDetails.forEach((element)=>{
+                    baseResponse?.Products[0]?.ProductDetails?.forEach((element)=>{
                         this.ProductDetails().push(this.newProductDetails(element.Title,element.Description));
                     })
                     baseResponse.Products[0]?.GalleryDetails?.forEach((element)=>{
@@ -125,7 +125,7 @@ export class AddAboutUsComponent implements OnInit {
     }
 
     hasError(controlName: string, errorName: string): boolean {
-        if(this.AboutUsForm.touched)
+        if(this.AboutUsForm.controls[controlName].touched)
         return this.AboutUsForm.controls[controlName].hasError(errorName);
     }
 
@@ -240,7 +240,6 @@ export class AddAboutUsComponent implements OnInit {
         } else {
             this.spinner.hide()
             this.toastrService.success("Uploaded Successfully","Success");
-            this._router.navigateByUrl("/products");
         }
     }
     patch() {

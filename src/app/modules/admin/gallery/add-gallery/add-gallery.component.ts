@@ -94,7 +94,7 @@ export class AddGalleryComponent implements OnInit {
     }
 
     hasError(controlName: string, errorName: string): boolean {
-        if(this.ProductForm.touched)
+        if(this.ProductForm.controls[controlName].touched)
         return this.ProductForm.controls[controlName].hasError(errorName);
     }
 

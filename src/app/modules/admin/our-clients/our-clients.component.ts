@@ -64,7 +64,7 @@ export class OurClientsComponent implements OnInit, OnDestroy
             )
             .subscribe(baseResponse => {
                 if (baseResponse.Success) {
-                    this.dataSource = baseResponse.Products;
+                    this.dataSource = baseResponse.Clients;
                     // this.layoutUtilsService.alertElementSuccess("", baseResponse.Message);
                 } else {
                     // this.layoutUtilsService.alertElement("", baseResponse.Message);

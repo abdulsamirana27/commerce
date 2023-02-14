@@ -11,7 +11,7 @@
     import {DataService} from "./generic-service/data.service";
     import {HttpResponseHandler} from "./generic-service/handle-error.service";
     import {NgDirectivesModule } from "ng-directives";
-    import {ViewFileComponent} from "./SharedComponent/add-review/view-file.component";
+    import {ViewFileComponent} from "./SharedComponent/view-file/view-file.component";
 
     @NgModule({
         declarations:

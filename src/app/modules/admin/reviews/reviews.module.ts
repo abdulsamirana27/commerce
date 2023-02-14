@@ -14,11 +14,10 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { TranslocoModule } from '@ngneat/transloco';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { SharedModule } from 'app/shared/shared.module';
+import {MatPaginatorModule} from "@angular/material/paginator";
 import {ReviewsComponent} from "./reviews.component";
-import {reviewsRoutes} from "./reviews.routing";
-import {NgxStarRatingModule} from "ngx-star-rating";
-import { AddReviewComponent } from './add-review/add-review.component';
-import {MatFormFieldModule} from "@angular/material/form-field";
+import {productsRoutes} from "./reviews.routing";
+import {AddReviewComponent} from "./add-product/add-review.component";
 
 @NgModule({
     declarations: [
@@ -26,7 +25,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
         AddReviewComponent
     ],
     imports: [
-        RouterModule.forChild(reviewsRoutes),
+        RouterModule.forChild(productsRoutes),
         MatButtonModule,
         MatButtonToggleModule,
         MatDividerModule,
@@ -41,8 +40,7 @@ import {MatFormFieldModule} from "@angular/material/form-field";
         NgApexchartsModule,
         TranslocoModule,
         SharedModule,
-        NgxStarRatingModule,
-        MatFormFieldModule
+        MatPaginatorModule
     ]
 })
 export class ReviewsModule

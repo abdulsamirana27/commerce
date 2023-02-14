@@ -1,6 +1,11 @@
-import { Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from "@angular/material/paginator";
 import {MatDialog} from "@angular/material/dialog";
-import {AddReviewComponent} from "./add-review/add-review.component";
+import {finalize} from "rxjs/operators";
+import {NgxSpinnerService} from "ngx-spinner";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {ReviewService} from "../../../services/review.service";
 
 
 @Component({
@@ -10,28 +15,69 @@ import {AddReviewComponent} from "./add-review/add-review.component";
 })
 export class ReviewsComponent implements OnInit, OnDestroy
 {
-    data:any;
-stars:any;
+    ReviewForm: FormGroup;
+    products:any;
+    displayedColumns: string[] =
+        [
+            'index',
+            'ClientName',
+            'ShortReview',
+            'DetailedReview',
+            'action',
+        ];
+    dataSource = new MatTableDataSource();
+    @ViewChild('TABLE') table: ElementRef;
+    //@ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild('MatPaginator', {static: false}) paginator: MatPaginator;
 
-    constructor( private dialogRef: MatDialog,)
+    constructor(
+        private dialogRef: MatDialog,
+        private reviewService: ReviewService,
+        private spinner: NgxSpinnerService,
+        private _formBuilder:FormBuilder,
+                 )
     { }
 
+    ngAfterViewInit(): void {
+        this.dataSource.paginator = this.paginator;
+    }
+
     ngOnInit(): void
-    {}
+    {
+        this.createForm()
+        this.getReview();
+
+    }
+
+    createForm(){
+        this.ReviewForm = this._formBuilder.group({
+            ClientName: [null],
+        })
+    }
+
+    getReview() {
+        this.spinner.show()
+        this.reviewService.getReviews(this.ReviewForm.value)
+            .pipe(
+                finalize(() => {
+                    this.spinner.hide()
+                })
+            )
+            .subscribe(baseResponse => {
+                if (baseResponse.Success) {
+                    this.dataSource = baseResponse.Reviews;
+                }
+            });
+    }
 
     ngOnDestroy(): void
-    {}
+    { }
 
-    onAddReview() {
-        const dialog = this.dialogRef.open(AddReviewComponent, {
-            width: '50%',
-            //data: user
-        })
-        dialog.afterClosed().pipe().subscribe(value => {
+    delete() {
 
-            if (!value) {
+    }
 
-            }
-        })
+    update() {
+
     }
 }

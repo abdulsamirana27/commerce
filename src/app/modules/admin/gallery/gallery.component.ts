@@ -1,13 +1,11 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
-import {AddReviewComponent} from "../reviews/add-review/add-review.component";
 import {MatDialog} from "@angular/material/dialog";
-import {ProductService} from "../../../services/product.service";
 import {finalize} from "rxjs/operators";
 import {NgxSpinnerService} from "ngx-spinner";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {ViewFileComponent} from "../../../shared/SharedComponent/add-review/view-file.component";
+import {ViewFileComponent} from "../../../shared/SharedComponent/view-file/view-file.component";
 import {GalleryService} from "./gallery.service";
 import { environment } from 'environments/environment';
 import {ToastrService} from "ngx-toastr";

@@ -1,13 +1,18 @@
 import { Route } from '@angular/router';
 import {ReviewsComponent} from "./reviews.component";
-import {ProjectResolver} from "./reviews.resolvers";
+import {AddReviewComponent} from "./add-product/add-review.component";
 
-export const reviewsRoutes: Route[] = [
+export const productsRoutes: Route[] = [
     {
         path     : '',
         component: ReviewsComponent,
-        resolve  : {
-            data: ProjectResolver
-        }
+    },
+    {
+        path     : 'add',
+        component: AddReviewComponent
+    },
+    {
+        path     : 'update/:id',
+        component: AddReviewComponent
     }
 ];
