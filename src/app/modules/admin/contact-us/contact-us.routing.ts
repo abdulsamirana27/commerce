@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 import {ContactUsComponent} from "./contact-us.component";
-import {AddContactUsComponent} from "./add-product/add-contact-us.component";
+import {AddContactUsComponent} from "./add-contact-us/add-contact-us.component";
 
 export const productsRoutes: Route[] = [
     {
@@ -12,7 +12,7 @@ export const productsRoutes: Route[] = [
         component: AddContactUsComponent
     },
     {
-        path     : 'update/:id',
+        path     : 'detail/:id',
         component: AddContactUsComponent
     }
 ];

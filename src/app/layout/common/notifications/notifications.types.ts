@@ -9,4 +9,9 @@ export interface Notification
     link?: string;
     useRouter?: boolean;
     read: boolean;
+//custom
+    Id:string;
+    Name:string;
+    Message:string;
+    ResponseStatus:string;
 }

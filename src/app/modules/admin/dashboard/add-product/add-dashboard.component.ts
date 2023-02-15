@@ -1,39 +1,40 @@
-import {Component,  OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
+import {MatPaginator} from "@angular/material/paginator";
 import {Images} from "../../../../model/images.model";
 import {finalize} from "rxjs/operators";
+import {ProductService} from "../../../../services/product.service";
 import {ToastrService} from "ngx-toastr";
 import {NgxSpinnerService} from "ngx-spinner";
 import { GenericService } from 'app/services/generic.service';
 import {ActivatedRoute, Router} from "@angular/router";
 import {environment} from "../../../../../environments/environment";
 import {ViewFileComponent} from "../../../../shared/SharedComponent/view-file/view-file.component";
-import {ClientsService} from "../../../../services/clients.service";
-import {ReviewService} from "../../../../services/review.service";
 
 @Component({
   selector: 'app-add-about-us',
-  templateUrl: './add-contact-us.component.html',
-  styleUrls: ['./add-contact-us.component.scss']
+  templateUrl: './add-dashboard.component.html',
+  styleUrls: ['./add-dashboard.component.scss']
 })
-export class AddContactUsComponent implements OnInit {
-    Title="Add Review"
+export class AddDashboardComponent implements OnInit {
+    Title="Add Dashboard"
     height
     width
     currentIndex: number = 0;
-    Review:any;
+    Product:any;
     baseUrl= environment.apiUrl+"/Span/Documents/";
-    ReviewForm: FormGroup;
+    DashboardForm: FormGroup;
     subDesc: FormGroup;
+    ProductDetailForm: FormGroup;
     images: Images[] = [];
     imageUrl: any[] = [];
 
     constructor( private dialog: MatDialog,
                  private _formBuilder:FormBuilder,
                  private fb:FormBuilder,
+                 private  productService:ProductService,
                  private  genericService:GenericService,
-                 private  reviewService:ReviewService,
                  private toastrService:ToastrService,
                  private spinner: NgxSpinnerService,
                  private route: ActivatedRoute,
@@ -42,27 +43,35 @@ export class AddContactUsComponent implements OnInit {
     { }
 
     ngOnInit(): void
-    {debugger
-        this.reviewForm();
+    {
+        this.productForm();
+        this.ProductDetailsForm();
         this.route.params.subscribe(
             params => {
                if(params['id']){
-                   this.Title="Update Review"
-                   this.ReviewForm.controls["Id"].setValue(params['id']);
-                   this.getReview()
+                   this.Title="Update Dashboard"
+                   this.DashboardForm.controls["Id"].setValue(params['id']);
+                   this.getProducts()
                }
             }
         )
     }
 
-    reviewForm(){
-        this.ReviewForm = this._formBuilder.group({
+    productForm(){
+        this.DashboardForm = this._formBuilder.group({
             Id:[null],
-            ClientName: [null, [Validators.required]],
-            ShortReview: [null, [Validators.required]],
-            DetailedReview: [null, [Validators.required]],
-            file:[null],
+            Name: [null, [Validators.required]],
+            ShortDescription: [null, [Validators.required]],
+            LongDescription: [null, [Validators.required]],
+            file: [null],
+            Type: [5],
         })
+    }
+
+    ProductDetailsForm(){
+        this.ProductDetailForm = this.fb.group({
+            ProductDetails: this.fb.array([]),
+        });
     }
 
     onSelectFile(event) {
@@ -78,15 +87,18 @@ export class AddContactUsComponent implements OnInit {
                             img.onload = () => {
                                 const width = img.width;
                                 const height = img.height;
+                                // !(height<=(width/2)) //landscape logic
                                 if(height > width || height == width){
                                 this.toastrService.error('Only landscape images are allowed', 'Error');
                                 return;
                                 }else{
                                     this.imageUrl.push(event.target.result);
+
                                 }
                             };
                             // @ts-ignore
                             img.src = reader.result;
+
                         };
                         reader.readAsDataURL(event.target.files[0]);
                         const imgFile = new Images();
@@ -105,9 +117,8 @@ export class AddContactUsComponent implements OnInit {
     }
 
     hasError(controlName: string, errorName: string): boolean {
-        debugger
-        if(this.ReviewForm.controls[controlName].touched)
-        return this.ReviewForm.controls[controlName].hasError(errorName);
+        if(this.DashboardForm.controls[controlName].touched)
+        return this.DashboardForm.controls[controlName].hasError(errorName);
     }
 
     ngOnDestroy(): void
@@ -118,23 +129,23 @@ export class AddContactUsComponent implements OnInit {
     }
 
     ifResetRequired() {
-        this.ReviewForm.controls['file'].reset();
+        this.DashboardForm.controls['file'].reset();
     }
     onSubmit() {
-        if (this.ReviewForm.invalid) {
-            for (const control of Object.keys(this.ReviewForm.controls)) {
-                this.ReviewForm.controls[control].markAsTouched();
+        if (this.DashboardForm.invalid) {
+            for (const control of Object.keys(this.DashboardForm.controls)) {
+                this.DashboardForm.controls[control].markAsTouched();
             }
             return;
         }
-
         if(this.images.length==0){
             this.toastrService.error("Attach atleast one image","Error")
             return
         }
-        this.Review = Object.assign({},this.ReviewForm.value)
+        debugger
+        this.Product = Object.assign({},this.DashboardForm.value)
         this.spinner.show();
-        this.reviewService.addReview(this.images[0].file,this.Review)
+        this.productService.addProducts(this.Product)
             .pipe(
                 finalize(() => {
                     this.spinner.hide();
@@ -142,8 +153,9 @@ export class AddContactUsComponent implements OnInit {
             )
             .subscribe(baseResponse => {
                 if (baseResponse.Success) {
-                    this.toastrService.success("Uploaded Successfully","Success");
-                    this._router.navigateByUrl("/reviews");
+                    debugger
+                    this.Product["Id"] = baseResponse.Product.Id;
+                    this.SaveMedia()
                 } else {
                     this.toastrService.error(baseResponse.Message, 'Error');
                 }
@@ -175,9 +187,9 @@ export class AddContactUsComponent implements OnInit {
         }
         this.ifResetRequired()
     }
-    getReview() {
+    getProducts() {
         this.spinner.show()
-        this.reviewService.getReviews(this.ReviewForm.value)
+        this.productService.getProducts(this.DashboardForm.value)
             .pipe(
                 finalize(() => {
                     this.spinner.hide()
@@ -185,18 +197,52 @@ export class AddContactUsComponent implements OnInit {
             )
             .subscribe(baseResponse => {
                 if (baseResponse.Success) {
-                    this.ReviewForm.patchValue(baseResponse.Reviews[0]);
-                    baseResponse.Reviews?.forEach((element)=>{
+                    debugger
+                     this.DashboardForm.patchValue(baseResponse.Products[0]);
+                    this.ProductDetailForm.patchValue(baseResponse.Products[0].ProductDetails);
+                    baseResponse.Products[0]?.GalleryDetails?.forEach((element)=>{
                         let single = element;
-                        if(single.ClientImage!="") {
-                            single.ClientImage = this.baseUrl + element.ClientImage;
-                            this.images.push(element);
-                            this.imageUrl.push(single.ClientImage);
-                        }
+                        single.GalleryPath=this.baseUrl+element.GalleryPath;
+                        this.images.push(element);
+                        this.imageUrl.push(single.GalleryPath);
                     })
                 }
             });
     }
+    SaveMedia()
+    {
+
+        if (this.currentIndex < this.images.length) {
+            if (this.images[this.currentIndex].GalleryPath == undefined) {
+                this.genericService
+                    .SaveMedia(this.images[this.currentIndex].file, {LinkedId:this.Product.Id,Type:5})
+                    .pipe(finalize(() => {
+                        // this.spinner.hide();
+                    }))
+                    .subscribe((baseResponse) => {
+                        if (baseResponse.Success) {
+                            this.currentIndex++;
+                            this.SaveMedia();
+                        } else {
+                            this.spinner.hide();
+                            // this.layoutUtilsService.alertElement(
+                            //     '',
+                            //     baseResponse.Message,
+                            //     baseResponse.Code = null
+                            // );
+                        }
+                    });
+            } else {
+                this.currentIndex++;
+                this.SaveMedia();
+            }
+        } else {
+            this.spinner.hide()
+            this.toastrService.success("Uploaded Successfully","Success");
+            this._router.navigateByUrl("/dashboard");
+        }
+    }
+
     previewImg(url) {
         const dialogRef = this.dialog.open(ViewFileComponent, {
             width: '70%',

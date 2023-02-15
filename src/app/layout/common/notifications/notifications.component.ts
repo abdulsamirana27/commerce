@@ -3,9 +3,13 @@ import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { MatButton } from '@angular/material/button';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {finalize, takeUntil} from 'rxjs/operators';
 import { Notification } from 'app/layout/common/notifications/notifications.types';
 import { NotificationsService } from 'app/layout/common/notifications/notifications.service';
+import {ContactUsService} from "../../../services/contact-us.service";
+import {ViewFileComponent} from "../../../shared/SharedComponent/view-file/view-file.component";
+import {MatDialog} from "@angular/material/dialog";
+import {AddContactUsComponent} from "../../../modules/admin/contact-us/add-contact-us/add-contact-us.component";
 
 @Component({
     selector       : 'notifications',
@@ -28,6 +32,8 @@ export class NotificationsComponent implements OnInit, OnDestroy
      * Constructor
      */
     constructor(
+        private dialog:MatDialog,
+        private contactUsService:ContactUsService,
         private _changeDetectorRef: ChangeDetectorRef,
         private _notificationsService: NotificationsService,
         private _overlay: Overlay,
@@ -45,25 +51,48 @@ export class NotificationsComponent implements OnInit, OnDestroy
      */
     ngOnInit(): void
     {
+        this.getContactUs()
         // Subscribe to notification changes
-        this._notificationsService.notifications$
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((notifications: Notification[]) => {
-
-                // Load the notifications
-                this.notifications = notifications;
-
-                // Calculate the unread count
-                this._calculateUnreadCount();
-
-                // Mark for check
-                this._changeDetectorRef.markForCheck();
-            });
+        // this._notificationsService.notifications$
+        //     .pipe(takeUntil(this._unsubscribeAll))
+        //     .subscribe((notifications: Notification[]) => {
+        //
+        //         // Load the notifications
+        //         this.notifications = notifications;
+        //
+        //         // Calculate the unread count
+        //         this._calculateUnreadCount();
+        //
+        //         // Mark for check
+        //         this._changeDetectorRef.markForCheck();
+        //     });
     }
 
-    /**
-     * On destroy
-     */
+    openNotification(notification){
+        debugger
+        const dialogRef = this.dialog.open(AddContactUsComponent, {
+            width: '70%',
+            height: '70%',
+            data: notification
+        });
+    }
+
+    getContactUs() {
+
+        this.contactUsService.getContactUs({})
+            .pipe(
+                finalize(() => {
+
+                })
+            ).subscribe(baseResponse => {
+            if (baseResponse.Success) {
+                debugger
+                this.notifications = baseResponse.Contactus;
+                this.unreadCount=this.notifications.length;
+                this._changeDetectorRef.markForCheck();
+            }
+        });
+    }
     ngOnDestroy(): void
     {
         // Unsubscribe from all subscriptions
@@ -110,9 +139,6 @@ export class NotificationsComponent implements OnInit, OnDestroy
         this._overlayRef.detach();
     }
 
-    /**
-     * Mark all notifications as read
-     */
     markAllAsRead(): void
     {
         // Mark all as read
@@ -203,20 +229,4 @@ export class NotificationsComponent implements OnInit, OnDestroy
         });
     }
 
-    /**
-     * Calculate the unread count
-     *
-     * @private
-     */
-    private _calculateUnreadCount(): void
-    {
-        let count = 0;
-
-        if ( this.notifications && this.notifications.length )
-        {
-            count = this.notifications.filter(notification => !notification.read).length;
-        }
-
-        this.unreadCount = count;
-    }
 }

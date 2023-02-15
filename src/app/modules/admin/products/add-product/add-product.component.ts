@@ -29,9 +29,6 @@ export class AddProductComponent implements OnInit {
     ProductDetailForm: FormGroup;
     images: Images[] = [];
     imageUrl: any[] = [];
-    @ViewChild('TABLE') table: ElementRef;
-    //@ViewChild(MatPaginator) paginator: MatPaginator;
-    @ViewChild('MatPaginator', {static: false}) paginator: MatPaginator;
 
     constructor( private dialog: MatDialog,
                  private _formBuilder:FormBuilder,
@@ -97,6 +94,7 @@ export class AddProductComponent implements OnInit {
                                 return;
                                 }else{
                                     this.imageUrl.push(event.target.result);
+
                                 }
                             };
                             // @ts-ignore
@@ -106,6 +104,7 @@ export class AddProductComponent implements OnInit {
                         const imgFile = new Images();
                         imgFile.file = Object.assign(event.target.files[0]);
                         this.images.push(imgFile);
+
                     } else {
                         this.toastrService.error('Only jpeg,jpg and png files are allowed', 'Error');
                         return;

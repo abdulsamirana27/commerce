@@ -57,6 +57,13 @@ export class GenericService {
         // .pipe(map((res: any) => res));
     }
 
+    deleteProducts(value) {
+        return this.http
+            .post<any>(
+                `${environment.apiUrl}/Span/api/Product/v1/DeleteProduct`,value)
+        // .pipe(map((res: any) => res));
+    }
+
 
 
 }

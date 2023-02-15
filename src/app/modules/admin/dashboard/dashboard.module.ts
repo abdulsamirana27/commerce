@@ -14,15 +14,18 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { TranslocoModule } from '@ngneat/transloco';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { SharedModule } from 'app/shared/shared.module';
+import {MatPaginatorModule} from "@angular/material/paginator";
 import {DashboardComponent} from "./dashboard.component";
-import {dashboardRoutes} from "./dashboard.routing";
+import {productsRoutes} from "./dashboard.routing";
+import {AddDashboardComponent} from "./add-product/add-dashboard.component";
 
 @NgModule({
     declarations: [
-        DashboardComponent
+        DashboardComponent,
+        AddDashboardComponent
     ],
-    imports     : [
-        RouterModule.forChild(dashboardRoutes),
+    imports: [
+        RouterModule.forChild(productsRoutes),
         MatButtonModule,
         MatButtonToggleModule,
         MatDividerModule,
@@ -36,7 +39,8 @@ import {dashboardRoutes} from "./dashboard.routing";
         MatTabsModule,
         NgApexchartsModule,
         TranslocoModule,
-        SharedModule
+        SharedModule,
+        MatPaginatorModule
     ]
 })
 export class DashboardModule

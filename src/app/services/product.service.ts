@@ -20,7 +20,6 @@ export class ProductService {
             // .pipe(map((res: any) => res));
     }
 
-
     addProducts(product) {
        let req={
            User: {

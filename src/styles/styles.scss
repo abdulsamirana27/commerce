@@ -65,20 +65,20 @@
 }
 .ngx-pagination .current {
     padding: 0.1875rem 0.625rem;
-    background: #2F409A !important;
+    background: #e12025 !important;
     color: #fefefe;
     cursor: default;
 }
 .text-blue{
-    color: #32409a !important;
+    color: #808382 !important;
 }
 .bg-blue{
-    background: #32409a !important;
+    background: #808382 !important;
     color:white;
 }
 .mat-button-wrapper {
     svg{
-        color: #32409a !important;
+        color: #808382 !important;
 
     }
 }
@@ -100,7 +100,7 @@
 
 .row{
     .total-btn:hover{
-        background-color: #32409a !important;
+        background-color: #808382 !important;
         color: white;
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
         cursor: pointer;
@@ -119,11 +119,11 @@
 
 fuse-vertical-navigation-aside-item > .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item:not(.fuse-vertical-navigation-item-disabled).fuse-vertical-navigation-item-active, fuse-vertical-navigation-aside-item > .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item:not(.fuse-vertical-navigation-item-disabled).fuse-vertical-navigation-item-active-forced, fuse-vertical-navigation-basic-item > .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item:not(.fuse-vertical-navigation-item-disabled).fuse-vertical-navigation-item-active, fuse-vertical-navigation-basic-item > .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item:not(.fuse-vertical-navigation-item-disabled).fuse-vertical-navigation-item-active-forced, fuse-vertical-navigation-collapsable-item > .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item:not(.fuse-vertical-navigation-item-disabled).fuse-vertical-navigation-item-active, fuse-vertical-navigation-collapsable-item > .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item:not(.fuse-vertical-navigation-item-disabled).fuse-vertical-navigation-item-active-forced {
     --tw-bg-opacity: 1;
-    background-color: #2F409A !important;
+    background-color: #e12025 !important;
     color: white;
 }
 body.light .mat-slide-toggle-bar, body .light .mat-slide-toggle-bar {
-    background-color: #32409a !important;
+    background-color: #808382 !important;
 }
 .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
     background-color: #dc3545 !important;
@@ -135,22 +135,22 @@ body.light .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb, body .light .m
 
 .dash-heading{
     background:white;
-    border-bottom: 1px solid #32409a !important;
+    border-bottom: 1px solid #808382 !important;
     padding: 4px 8px;
     font-size: 1rem;
 }
 
 .text-green{
-    color: #32409a;
+    color: #808382;
 }
 
 .radio-green [type="radio"]:checked+label:after {
-    border-color: #32409a !important;
-    background-color: #32409a !important;
+    border-color: #808382 !important;
+    background-color: #808382 !important;
 }
 //
 //.bg-green{
-//    background: #32409a  !important;
+//    background: #808382  !important;
 //    color: white !important;
 //}
 .timepicker-overlay {
@@ -188,13 +188,13 @@ body.light .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb, body .light .m
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #2F409A !important;
+    background: #e12025 !important;
     border-radius: 6px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #2F409A !important;
+    background: #e12025 !important;
 }
 
 fuse-vertical-navigation fuse-vertical-navigation-aside-item .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item, fuse-vertical-navigation fuse-vertical-navigation-basic-item .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item, fuse-vertical-navigation fuse-vertical-navigation-collapsable-item .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item, fuse-vertical-navigation fuse-vertical-navigation-divider-item .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item, fuse-vertical-navigation fuse-vertical-navigation-group-item .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item, fuse-vertical-navigation fuse-vertical-navigation-spacer-item .fuse-vertical-navigation-item-wrapper .fuse-vertical-navigation-item {

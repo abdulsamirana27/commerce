@@ -91,6 +91,7 @@ export class AddProjectComponent implements OnInit {
                                 return;
                                 }else{
                                     this.imageUrl.push(event.target.result);
+
                                 }
                             };
                             // @ts-ignore

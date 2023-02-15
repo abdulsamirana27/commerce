@@ -6,6 +6,8 @@ import {ProductService} from "../../../services/product.service";
 import {finalize} from "rxjs/operators";
 import {NgxSpinnerService} from "ngx-spinner";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {GenericService} from "../../../services/generic.service";
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -31,7 +33,8 @@ export class ProductsComponent implements OnInit, OnDestroy
 
     constructor(
         private dialogRef: MatDialog,
-        private productService: ProductService,
+        private genericService:GenericService,
+        private toastrService:ToastrService,
         private spinner: NgxSpinnerService,
         private _formBuilder:FormBuilder,
                  )
@@ -57,7 +60,7 @@ export class ProductsComponent implements OnInit, OnDestroy
 
     getProducts() {
         this.spinner.show()
-        this.productService.getProducts(this.ProductForm.value)
+        this.genericService.getProducts(this.ProductForm.value)
             .pipe(
                 finalize(() => {
                     this.spinner.hide()
@@ -76,8 +79,23 @@ export class ProductsComponent implements OnInit, OnDestroy
     ngOnDestroy(): void
     { }
 
-    delete() {
-
+    delete(data) {
+        debugger
+        this.spinner.show()
+        this.genericService.deleteProducts(data)
+            .pipe(
+                finalize(() => {
+                    this.spinner.hide()
+                })
+            )
+            .subscribe(baseResponse => {
+                if (baseResponse.Success) {
+                    this.toastrService.success("Deleted successfully","Success")
+                    this.getProducts()
+                } else {
+                    this.toastrService.error("Something went wrong","Error")
+                }
+            });
     }
 
     update() {

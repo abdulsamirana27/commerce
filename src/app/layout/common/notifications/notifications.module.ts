@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NotificationsComponent } from 'app/layout/common/notifications/notifications.component';
 import { SharedModule } from 'app/shared/shared.module';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import { SharedModule } from 'app/shared/shared.module';
         MatButtonModule,
         MatIconModule,
         MatTooltipModule,
-        SharedModule
+        SharedModule,
+        MatDialogModule
     ],
     exports     : [
         NotificationsComponent

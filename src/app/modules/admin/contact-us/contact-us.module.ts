@@ -17,7 +17,8 @@ import { SharedModule } from 'app/shared/shared.module';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {ContactUsComponent} from "./contact-us.component";
 import {productsRoutes} from "./contact-us.routing";
-import {AddContactUsComponent} from "./add-product/add-contact-us.component";
+import {AddContactUsComponent} from "./add-contact-us/add-contact-us.component";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
     declarations: [
@@ -40,7 +41,8 @@ import {AddContactUsComponent} from "./add-product/add-contact-us.component";
         NgApexchartsModule,
         TranslocoModule,
         SharedModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatDialogModule
     ]
 })
 export class ContactUsModule

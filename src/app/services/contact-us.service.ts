@@ -18,6 +18,12 @@ export class ContactUsService {
                 `${environment.apiUrl}/Span/api/ContactUs/v1/GetContactUs`,req);
     }
 
+    ChangeStatusContactUs(req) {
+        req["UserId"]=Number(this.user["UserId"])
+        return this.http
+            .post<any>(
+                `${environment.apiUrl}/Span/api/ContactUs/v1/ChangeStatus`,req);
+    }
 
     addContactUs(file,client) {
         debugger

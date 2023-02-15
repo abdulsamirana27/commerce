@@ -6,6 +6,7 @@ import {finalize} from "rxjs/operators";
 import {NgxSpinnerService} from "ngx-spinner";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {GenericService} from "../../../services/generic.service";
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -34,6 +35,7 @@ export class ProjectComponent implements OnInit, OnDestroy
         private genericService: GenericService,
         private spinner: NgxSpinnerService,
         private _formBuilder:FormBuilder,
+        private toastrService:ToastrService,
                  )
     { }
 
@@ -72,7 +74,24 @@ export class ProjectComponent implements OnInit, OnDestroy
                 }
             });
     }
-delete(){}
+    delete(data) {
+        debugger
+        this.spinner.show()
+        this.genericService.deleteProducts(data)
+            .pipe(
+                finalize(() => {
+                    this.spinner.hide()
+                })
+            )
+            .subscribe(baseResponse => {
+                if (baseResponse.Success) {
+                    this.toastrService.success("Deleted successfully","Success")
+                    this.getProducts()
+                } else {
+                    this.toastrService.error("Something went wrong","Error")
+                }
+            });
+    }
     ngOnDestroy(): void
     { }
 

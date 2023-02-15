@@ -7,6 +7,8 @@ import {NgxSpinnerService} from "ngx-spinner";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {ReviewService} from "../../../services/review.service";
 import {ContactUsService} from "../../../services/contact-us.service";
+import {AddContactUsComponent} from "./add-contact-us/add-contact-us.component";
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -16,8 +18,8 @@ import {ContactUsService} from "../../../services/contact-us.service";
 })
 export class ContactUsComponent implements OnInit, OnDestroy
 {
-    ReviewForm: FormGroup;
-    products:any;
+    ContactUsForm: FormGroup;
+    ContactUs:any;
     displayedColumns: string[] =
         [
             'index',
@@ -35,10 +37,11 @@ export class ContactUsComponent implements OnInit, OnDestroy
     @ViewChild('MatPaginator', {static: false}) paginator: MatPaginator;
 
     constructor(
-        private dialogRef: MatDialog,
+        private dialog: MatDialog,
         private contactUsService: ContactUsService,
         private spinner: NgxSpinnerService,
         private _formBuilder:FormBuilder,
+        private toastrService:ToastrService
                  )
     { }
 
@@ -49,19 +52,19 @@ export class ContactUsComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         this.createForm()
-        this.getReview();
+        this.getContactUs();
 
     }
 
     createForm(){
-        this.ReviewForm = this._formBuilder.group({
+        this.ContactUsForm = this._formBuilder.group({
             Id: [null],
         })
     }
 
-    getReview() {
+    getContactUs() {
         this.spinner.show()
-        this.contactUsService.getContactUs(this.ReviewForm.value)
+        this.contactUsService.getContactUs(this.ContactUsForm.value)
             .pipe(
                 finalize(() => {
                     this.spinner.hide()
@@ -73,13 +76,41 @@ export class ContactUsComponent implements OnInit, OnDestroy
             });
     }
 
+    openNotification(notification){
+        debugger
+        const dialogRef = this.dialog.open(AddContactUsComponent, {
+            width: '70%',
+            height: '70%',
+            data: notification
+        });
+    }
+
     ngOnDestroy(): void
     { }
 
     delete() {
 
     }
+    changeStatus(data) {
+        this.spinner.show();
+        data.ResponseStatus=1;
+        this.contactUsService.ChangeStatusContactUs(data)
+            .pipe(
+                finalize(() => {
+                    this.spinner.hide();
+                })
+            )
+            .subscribe(baseResponse => {
+                if (baseResponse.Success) {
+                    debugger
+                    this.toastrService.success("Status Changed Successfully","Success");
 
+                } else {
+                    this.toastrService.error(baseResponse.Message, 'Error');
+                }
+            });
+
+    }
     update() {
 
     }
