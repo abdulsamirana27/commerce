@@ -75,9 +75,14 @@ export class AddDashboardComponent implements OnInit {
     }
 
     onSelectFile(event) {
+
         debugger
         if (this.images.length < 1) {
             if (event.target.files && event.target.files[0]) {
+                // if(((event.target.files[0].size/1024)/1024)>2){
+                //     this.toastrService.error('File must be of 2MB', 'Error');
+                //     return;
+                // }
                 const Name = event.target.files[0].name.split('.').pop();
                 if (Name != undefined) {
                     if (Name.toLowerCase() == 'jpg' || Name.toLowerCase() == 'jpeg' || Name.toLowerCase() == 'png') {
