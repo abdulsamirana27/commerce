@@ -206,6 +206,7 @@ export class AddAboutUsComponent implements OnInit {
                 });
         } else {
             this.imageUrl.splice(val,1)
+            this.images.splice(val, 1);;
         }
         this.ifResetRequired()
     }
