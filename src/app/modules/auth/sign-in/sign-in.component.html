@@ -1,11 +1,12 @@
-<div class="relative hidden md:flex flex-auto items-center justify-center h-full p-16 lg:px-28 overflow-hidden" style="background-image: url('../../assets/360_F_119115529_mEnw3lGpLdlDkfLgRcVSbFRuVl6sMDty.jpg')">
+<div class="relative hidden md:flex flex-auto items-center justify-center  overflow-hidden" style="background-image: url('../../assets/back.jpg'); background-repeat: no-repeat; background-size: 100% 100%;">
     <div
-        class="md:flex md:items-center md:justify-end w-full sm:w-auto md:h-full  py-8 px-4 sm:p-12 md:p-16 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card">
-        <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
+        class="md:flex md:items-center md:justify-end w-full sm:w-auto      " >
+        <div class="w-full sm:w-100 mx-auto sm:mx-0 py-4 px-8 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none " style="background: #f7f7f7">
             <!-- Logo -->
-            <div class="mt-2 text-2xl font-extrabold tracking-tight leading-tight w-full">
-                <h1 style="color: #4f46e5">Ecommerce Admin Panel</h1>
-            </div>
+            <img src="assets/images/logo/logo.jfif" class="mx-auto" style="width: 200px;">
+<!--            <div class="mt-2 text-2xl font-extrabold tracking-tight leading-tight w-full">-->
+<!--                <h1 style="color: #e12025">Span</h1>-->
+<!--            </div>-->
 
             <!-- Title -->
             <div class="mt-8 text-2xl font-extrabold tracking-tight leading-tight">Sign in</div>
@@ -88,7 +89,7 @@
                 <button
                     class="fuse-mat-button-large w-full mt-6"
                     mat-flat-button
-                    [color]="'primary'"
+                    style="background-color: #808382 !important; color: white !important;"
                     [disabled]="signInForm.disabled"
                     (click)="signIn()">
                     <span *ngIf="!signInForm.disabled">
