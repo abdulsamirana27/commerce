@@ -2,16 +2,13 @@
 import { FuseNavigationItem } from '@fuse/components/navigation';
 
 export const defaultNavigation: FuseNavigationItem[] = [
-            // {
-            //     id   : 'dashboard',
-            //     title: 'Dashboard',
-            //     type : 'basic',
-            //     icon : 'heroicons_outline:home',
-            //     link : '/dashboard'
-            // },
-
-
-    {
+            {
+                id   : 'dashboard',
+                title: 'Dashboard',
+                type : 'basic',
+                icon : 'heroicons_outline:home',
+                link : '/dashboard'
+            }, {
         id   : 'products',
         title: 'Products',
         type : 'basic',
@@ -22,14 +19,14 @@ export const defaultNavigation: FuseNavigationItem[] = [
         id   : 'projects',
         title: 'Projects',
         type : 'basic',
-        icon : 'heroicons_outline:document-duplicate',
+        icon : 'heroicons_outline:briefcase',
         link : '/projects'
     },
     {
         id   : 'ourClient',
         title: 'Our Client',
         type : 'basic',
-        icon : 'heroicons_outline:document-duplicate',
+        icon : 'heroicons_outline:users',
         link : '/clients'
     },
     {
@@ -40,10 +37,17 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link : '/about-us/add'
     },
     {
+        id   : 'contact us',
+        title: 'Contact Us',
+        type : 'basic',
+        icon : 'heroicons_outline:phone',
+        link : '/contact-us'
+    },
+    {
         id   : 'gallery',
         title: 'Gallery',
         type : 'basic',
-        icon : 'heroicons_outline:document-duplicate',
+        icon : 'heroicons_outline:photograph',
         link : '/gallery'
     },
 

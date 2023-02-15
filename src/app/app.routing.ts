@@ -81,6 +81,7 @@ export const appRoutes: Route[] = [
             {path: 'projects', loadChildren: () => import('app/modules/admin/projects/project.module').then(m => m.ProjectModule)},
             {path: 'clients', loadChildren: () => import('app/modules/admin/our-clients/our-clients.module').then(m => m.OurClientsModule)},
             {path: 'about-us', loadChildren: () => import('app/modules/admin/about-us/about-us.module').then(m => m.AboutUsModule)},
+            {path: 'contact-us', loadChildren: () => import('app/modules/admin/contact-us/contact-us.module').then(m => m.ContactUsModule)},
             {path: 'gallery', loadChildren: () => import('app/modules/admin/gallery/gallery.module').then(m => m.GalleryModule)},
             {path: 'users', loadChildren: () => import('app/modules/admin/users/users.module').then(m => m.UsersModule)},
             {path: 'reviews', loadChildren: () => import('app/modules/admin/reviews/reviews.module').then(m => m.ReviewsModule)},

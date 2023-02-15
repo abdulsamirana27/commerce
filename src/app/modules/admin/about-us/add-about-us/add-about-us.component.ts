@@ -242,28 +242,6 @@ export class AddAboutUsComponent implements OnInit {
             this.toastrService.success("Uploaded Successfully","Success");
         }
     }
-    patch() {
-        const sam = {
-            ProductDetails: [
-                {
-                    sub_title: 'sam',
-                    sub_description: 'sam',
-                },
-                {
-                    sub_title: 'sssss',
-                    sub_description: 'sam',
-                },
-                {
-                    sub_title: 'sssss',
-                    sub_description: 'sam',
-                },
-            ],
-        };
-        sam.ProductDetails.forEach((element)=>{
-            this.ProductDetails().push(this.newProductDetails(element.sub_title,element.sub_description));
-        })
-
-    }
     previewImg(url) {
         const dialogRef = this.dialog.open(ViewFileComponent, {
             width: '70%',

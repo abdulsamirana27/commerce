@@ -15,7 +15,6 @@ import { appRoutes } from 'app/app.routing';
 import {NgxSpinnerModule} from "ngx-spinner";
 import {ToastrModule} from "ngx-toastr";
 import {FormsModule} from "@angular/forms";
-import {AngularImageViewerModule} from "@hreimer/angular-image-viewer";
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy       : PreloadAllModules,
