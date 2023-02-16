@@ -38,6 +38,7 @@
                     <input
                         id="name"
                         matInput
+                        maxlength="500"
                         [formControlName]="'name'">
                     <mat-error *ngIf="signUpForm.get('name').hasError('required')">
                         Full name is required

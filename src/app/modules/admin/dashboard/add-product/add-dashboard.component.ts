@@ -103,7 +103,6 @@ export class AddDashboardComponent implements OnInit {
                             };
                             // @ts-ignore
                             img.src = reader.result;
-
                         };
                         reader.readAsDataURL(event.target.files[0]);
                         const imgFile = new Images();

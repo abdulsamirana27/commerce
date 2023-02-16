@@ -27,6 +27,7 @@
                                         <mat-label>Title/Name</mat-label>
                                         <input
                                             matInput
+                                            maxlength="500"
                                             [formControlName]="'Name'"
                                             placeholder="Enter Title/Name">
                                     </mat-form-field>
@@ -40,6 +41,7 @@
                                         <mat-label>Short Description</mat-label>
                                         <input
                                             matInput
+                                            maxlength="500"
                                             [formControlName]="'ShortDescription'"
                                             placeholder="Enter Question Sequence">
                                     </mat-form-field>
@@ -50,6 +52,7 @@
                                     <mat-form-field class="w-full" floatLabel="always">
                                        <mat-label>Long Description</mat-label>
                                         <textarea matInput
+                                                  maxlength="1000"
                                             [formControlName]="'LongDescription'"
                                             placeholder="Long Description...">
 
@@ -130,6 +133,7 @@
                                             <mat-form-field class="w-full" floatLabel="always">
                                                 <mat-label>{{ i + 1 }} Title</mat-label>
                                                 <input matInput
+                                                       maxlength="500"
                                                           [formControlName]="'Title'"
                                                           placeholder="Title">
 
@@ -149,6 +153,7 @@
                                             <mat-form-field class="w-full" floatLabel="always">
                                                 <mat-label>Description</mat-label>
                                                 <textarea matInput
+                                                          maxlength="1000"
                                                           [formControlName]="'Description'"
                                                           placeholder="Description...">
 
