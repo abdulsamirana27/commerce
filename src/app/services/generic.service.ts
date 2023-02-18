@@ -58,6 +58,7 @@ export class GenericService {
     }
 
     deleteProducts(value) {
+        debugger
         return this.http
             .post<any>(
                 `${environment.apiUrl}/Span/api/Product/v1/DeleteProduct`,value)

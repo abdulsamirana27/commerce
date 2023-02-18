@@ -87,7 +87,13 @@ export class ContactUsComponent implements OnInit, OnDestroy
 
     ngOnDestroy(): void
     { }
-
+    status(val){
+        if(val==0){
+            return "Pending"
+        }else{
+            return "Approved"
+        }
+    };
     delete() {
 
     }

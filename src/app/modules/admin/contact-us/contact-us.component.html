@@ -76,7 +76,7 @@
                     </ng-container>
                     <ng-container matColumnDef="ResponseStatus">
                         <th mat-header-cell class="duration-cell" *matHeaderCellDef>Response Status</th>
-                        <td mat-cell *matCellDef="let element"> {{element.ResponseStatus}} </td>
+                        <td mat-cell *matCellDef="let element"> {{status(element.ResponseStatus)}} </td>
                     </ng-container>
 
                     <ng-container matColumnDef="action">
@@ -87,11 +87,10 @@
                                 <mat-icon>check_circle</mat-icon>
                             </button>
 
-                            <button mat-icon-button
+                            <button mat-button
                                     matTooltip="View Detail"
-                                    class="iconbutton"
+                                    style="background-color: #808382"
                                     (click)="openNotification(element)">
-                                <mat-icon class=" mr-2" style="color: #808382 !important">edit</mat-icon>
                                 View Detail
                             </button>
                         </td>
@@ -123,12 +122,12 @@
             <div>
             </div>
         </div>
-        <div
-            class="bg-white rounded-md shadow mt-4 px-4 py-3 flex items-center justify-between border-gray-200  row-cols-1 row-cols-md-3 g-3">
-            <mat-paginator #MatPaginator [pageSizeOptions]="[10, 20, 30]"
-                           showFirstLastButtons
-                           aria-label="Select page of periodic elements">
-            </mat-paginator>
-        </div>
+<!--        <div-->
+<!--            class="bg-white rounded-md shadow mt-4 px-4 py-3 flex items-center justify-between border-gray-200  row-cols-1 row-cols-md-3 g-3">-->
+<!--            <mat-paginator #MatPaginator [pageSizeOptions]="[10, 20, 30]"-->
+<!--                           showFirstLastButtons-->
+<!--                           aria-label="Select page of periodic elements">-->
+<!--            </mat-paginator>-->
+<!--        </div>-->
     </div>
 </div>

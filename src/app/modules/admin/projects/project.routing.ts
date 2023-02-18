@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 import {ProjectComponent} from "./project.component";
-import {AddProjectComponent} from "./add-product/add-project.component";
+import {AddProjectComponent} from "./add-project/add-project.component";
 
 export const productsRoutes: Route[] = [
     {

@@ -23,6 +23,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link : '/projects'
     },
     {
+        id   : 'services',
+        title: 'Services',
+        type : 'basic',
+        icon : 'heroicons_outline:users',
+        link : '/service'
+    },
+    {
         id   : 'ourClient',
         title: 'Our Client',
         type : 'basic',
@@ -44,13 +51,20 @@ export const defaultNavigation: FuseNavigationItem[] = [
         link : '/gallery'
     },
 
-    // {
-    //     id   : 'users',
-    //     title: 'User',
-    //     type : 'basic',
-    //     icon : 'heroicons_outline:users',
-    //     link : '/users'
-    // },
+    {
+        id   : 'features',
+        title: 'Features',
+        type : 'basic',
+        icon : 'heroicons_outline:users',
+        link : '/feature/add'
+    },
+    {
+        id   : 'company',
+        title: 'Company Detail',
+        type : 'basic',
+        icon : 'heroicons_outline:office-building',
+        link : '/company/add'
+    },
 
     {
         id   : 'reviews',

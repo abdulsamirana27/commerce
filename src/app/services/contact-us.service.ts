@@ -17,7 +17,11 @@ export class ContactUsService {
             .post<any>(
                 `${environment.apiUrl}/Span/api/ContactUs/v1/GetContactUs`,req);
     }
-
+    getCompanyDetail(req) {
+        return this.http
+            .post<any>(
+                `${environment.apiUrl}/Span/api/ContactUs/v1/GetCompanyDetail`,{});
+    }
     ChangeStatusContactUs(req) {
         req["UserId"]=Number(this.user["UserId"])
         return this.http
@@ -26,7 +30,6 @@ export class ContactUsService {
     }
 
     addContactUs(file,client) {
-        debugger
         var formData = new FormData();
         formData.append('ClientName', client.ClientName);
         formData.append('ShortReview', client.ShortReview);
@@ -35,5 +38,14 @@ export class ContactUsService {
         formData.append('File', file);
         return this.http.post<any>(`${environment.apiUrl}/Span/api/Review/v1/AddUpdateReview`,formData);
     }
-
+    addCompanyDetail(CompanyDetail) {
+        let req={
+            User: {
+                UserId:this.user["UserId"]
+            },CompanyDetail:CompanyDetail};
+        return this.http
+            .post<any>(
+                `${environment.apiUrl}/Span/api/ContactUs/v1/AddUpdateCompanyDetail`,req)
+        // .pipe(map((res: any) => res));
+    }
 }

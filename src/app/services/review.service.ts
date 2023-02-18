@@ -30,4 +30,13 @@ export class ReviewService {
         return this.http.post<any>(`${environment.apiUrl}/Span/api/Review/v1/AddUpdateReview`,formData);
     }
 
+    deleteReview(value) {
+        return this.http
+            .post<any>(
+                `${environment.apiUrl}/Span/api/Review/v1/DeleteReview`,value)
+        // .pipe(map((res: any) => res));
+    }
+
+
+
 }

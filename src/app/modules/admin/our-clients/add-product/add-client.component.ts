@@ -12,7 +12,7 @@ import {ViewFileComponent} from "../../../../shared/SharedComponent/view-file/vi
 import {ClientsService} from "../../../../services/clients.service";
 
 @Component({
-  selector: 'app-add-about-us',
+  selector: 'app-add-company-detail',
   templateUrl: './add-client.component.html',
   styleUrls: ['./add-client.component.scss']
 })

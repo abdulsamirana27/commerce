@@ -6,6 +6,7 @@ import {finalize} from "rxjs/operators";
 import {NgxSpinnerService} from "ngx-spinner";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {ReviewService} from "../../../services/review.service";
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -25,7 +26,7 @@ export class ReviewsComponent implements OnInit, OnDestroy
             'DetailedReview',
             'action',
         ];
-    dataSource = new MatTableDataSource();
+    dataSource;
     @ViewChild('TABLE') table: ElementRef;
     //@ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild('MatPaginator', {static: false}) paginator: MatPaginator;
@@ -33,14 +34,15 @@ export class ReviewsComponent implements OnInit, OnDestroy
     constructor(
         private dialogRef: MatDialog,
         private reviewService: ReviewService,
+        private toastrService: ToastrService,
         private spinner: NgxSpinnerService,
         private _formBuilder:FormBuilder,
                  )
     { }
 
-    ngAfterViewInit(): void {
-        this.dataSource.paginator = this.paginator;
-    }
+    // ngAfterViewInit(): void {
+    //     this.dataSource.paginator = this.paginator;
+    // }
 
     ngOnInit(): void
     {
@@ -66,6 +68,8 @@ export class ReviewsComponent implements OnInit, OnDestroy
             .subscribe(baseResponse => {
                 if (baseResponse.Success) {
                     this.dataSource = baseResponse.Reviews;
+                }else{
+                    this.dataSource=[];
                 }
             });
     }
@@ -73,8 +77,24 @@ export class ReviewsComponent implements OnInit, OnDestroy
     ngOnDestroy(): void
     { }
 
-    delete() {
+    delete(data) {
+        debugger
+        this.spinner.show()
+        this.reviewService.deleteReview(data)
+            .pipe(
+                finalize(() => {
+                    this.spinner.hide()
+                })
+            )
+            .subscribe(baseResponse => {
+                if (baseResponse.Success) {
+                    this.toastrService.success("Deleted successfully","Success")
+                    this.getReview()
+                } else {
 
+                    this.toastrService.error("Something went wrong","Error")
+                }
+            });
     }
 
     update() {

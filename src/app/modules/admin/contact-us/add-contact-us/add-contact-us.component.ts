@@ -14,7 +14,7 @@ import {ReviewService} from "../../../../services/review.service";
 import {ContactUsService} from "../../../../services/contact-us.service";
 
 @Component({
-  selector: 'app-add-about-us',
+  selector: 'app-add-company-detail',
   templateUrl: './add-contact-us.component.html',
   styleUrls: ['./add-contact-us.component.scss']
 })

@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 import {ReviewsComponent} from "./reviews.component";
-import {AddReviewComponent} from "./add-product/add-review.component";
+import {AddReviewComponent} from "./add-reviews/add-review.component";
 
 export const productsRoutes: Route[] = [
     {
@@ -12,7 +12,7 @@ export const productsRoutes: Route[] = [
         component: AddReviewComponent
     },
     {
-        path     : 'update/:id',
+        path     : 'detail/:id',
         component: AddReviewComponent
     }
 ];

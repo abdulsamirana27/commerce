@@ -19,7 +19,6 @@ export class ClientsService {
                 `${environment.apiUrl}/Span/api/OurClient/v1/GetClients`,req);
     }
 
-
     addClient(file,client) {
         debugger
         var formData = new FormData();
@@ -27,6 +26,12 @@ export class ClientsService {
         formData.append('UserId', this.user["UserId"]);
         formData.append('File', file);
         return this.http.post<any>(`${environment.apiUrl}/Span/api/OurClient/v1/AddUpdateClient`,formData);
+    }
+    deleteClient(value) {
+        return this.http
+            .post<any>(
+                `${environment.apiUrl}/Span/api/OurClient/v1/DeleteClient`,value)
+        // .pipe(map((res: any) => res));
     }
 
 }

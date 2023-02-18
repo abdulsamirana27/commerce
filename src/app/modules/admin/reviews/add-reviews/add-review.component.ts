@@ -13,7 +13,7 @@ import {ClientsService} from "../../../../services/clients.service";
 import {ReviewService} from "../../../../services/review.service";
 
 @Component({
-  selector: 'app-add-about-us',
+  selector: 'app-add-company-detail',
   templateUrl: './add-review.component.html',
   styleUrls: ['./add-review.component.scss']
 })
@@ -76,15 +76,15 @@ export class AddReviewComponent implements OnInit {
                         reader.onload = (event: any) => {
                             var img = new Image();
                             img.onload = () => {
-                                const width = img.width;
-                                const height = img.height;
-                                if(height > width || height == width){
-                                this.toastrService.error('Only landscape images are allowed', 'Error');
-                                return;
-                                }else{
+                                // const width = img.width;
+                                // const height = img.height;
+                                // if(height > width || height == width){
+                                // this.toastrService.error('Only landscape images are allowed', 'Error');
+                                // return;
+                                // }else{
                                     this.imageUrl.push(event.target.result);
 
-                                }
+                                // }
                             };
                             // @ts-ignore
                             img.src = reader.result;

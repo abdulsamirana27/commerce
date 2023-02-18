@@ -1,0 +1,173 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+
+    <div class="sm:col-span-2 lg:col-span-3  flex flex-col mt-3 my-8 ml-5 mr-5">
+        <div class="overflow-x-auto w-full">
+            <div class="overflow-auto bg-white border example-container mat-elevation-z8" >
+                <div class="bg-card">
+                    <div class="w-full mx-auto">
+                        <div class="flex flex-col px-8 sm:flex-row flex-auto sm:items-center min-w-0 my-4 sm:my-4">
+                            <div class="flex flex-auto items-center min-w-0">
+                                <div class="text-2xl font-semibold md:text-2xl tracking-tight leading-7 md:leading-snug truncate">
+                                    <b>Company Detail</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container mt-8">
+                    <div class="mt-8">
+                        <div autocomplete="off"
+                              class="mt-8"
+                              [formGroup]="CompanyDetailForm">
+                            <div class="row mt-8">
+                                <div class="col-lg-12">
+                                    <mat-form-field class="w-full" floatLabel="always">
+                                        <mat-label>Address</mat-label>
+                                        <textarea matInput
+                                                  maxlength="1000"
+                                                  [formControlName]="'Address'"
+                                                  placeholder="Address...">
+
+                                        </textarea>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row mt-8">
+                                <div class="col-lg-12">
+                                    <mat-form-field class="w-full" floatLabel="always">
+                                        <mat-label>Secondary Address</mat-label>
+                                        <textarea matInput
+                                                  maxlength="1000"
+                                                  [formControlName]="'SubAddress'"
+                                                  placeholder="Secondary Address...">
+
+                                        </textarea>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row mt-8">
+                                <div class="col-lg-6">
+                                    <mat-form-field class="w-full" floatLabel="always">
+                                        <mat-label>Email</mat-label>
+                                        <input
+                                            matInput
+                                            maxlength="200"
+                                            [formControlName]="'Email'"
+                                            placeholder="Enter Email">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-6">
+                                    <mat-form-field class="w-full" floatLabel="always">
+                                        <mat-label>Contact Number</mat-label>
+                                        <input
+                                            matInput
+                                            maxlength="45"
+                                            [formControlName]="'ContactNumber'"
+                                            placeholder="Contact Number">
+                                    </mat-form-field>
+                                    <mat-error *ngIf="hasError('ContactNumber', 'required')">Title
+                                        <strong>required</strong>
+                                    </mat-error>
+                                </div>
+                            </div>
+                            <div class="row mt-8">
+                                <div class="col-lg-6">
+                                    <mat-form-field class="w-full" floatLabel="always">
+                                        <mat-label>Cordinates</mat-label>
+                                        <input
+                                            matInput
+                                            maxlength="200"
+                                            [formControlName]="'LatLng'"
+                                            placeholder="Enter Cordinates">
+                                    </mat-form-field>
+                                    <!--                                    <mat-error *ngIf="hasError('LatLng', 'pattern')">pattern-->
+                                    <!--                                        <strong>required</strong>-->
+                                    <!--                                    </mat-error>-->
+                                </div>
+                                <div class="col-lg-6">
+                                    <mat-form-field class="w-full" floatLabel="always">
+                                        <mat-label>OfficeTiming</mat-label>
+                                        <input
+                                            matInput
+                                            maxlength="200"
+                                            [formControlName]="'OfficeTiming'"
+                                            placeholder="Enter Office Timing">
+                                    </mat-form-field>
+                                    <!--                                    <mat-error *ngIf="hasError('LatLng', 'pattern')">pattern-->
+                                    <!--                                        <strong>required</strong>-->
+                                    <!--                                    </mat-error>-->
+                                </div>
+                            </div>
+                            <div class="row mt-8">
+                                <div class="col-lg-12">
+                                    <mat-form-field class="w-full" floatLabel="always">
+                                        <mat-label>Contact Text</mat-label>
+                                        <textarea matInput
+                                                  maxlength="1000"
+                                                  [formControlName]="'ContactText'"
+                                                  placeholder="Contact Text...">
+
+                                        </textarea>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row mt-8">
+                                <div class="col-lg-12">
+                                    <mat-form-field class="w-full" floatLabel="always">
+                                        <mat-label>Facebook Link</mat-label>
+                                        <input
+                                            matInput
+                                            maxlength="200"
+                                            [formControlName]="'FacebookLink'"
+                                            placeholder="Enter FacebookLink">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row mt-8">
+                                <div class="col-lg-12">
+                                    <mat-form-field class="w-full" floatLabel="always">
+                                        <mat-label>LinkedIn Link</mat-label>
+                                        <input
+                                            matInput
+                                            maxlength="200"
+                                            [formControlName]="'LinkedInLink'"
+                                            placeholder="Enter LinkedIn Link">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row mt-8">
+                                <div class="col-lg-12">
+                                    <mat-form-field class="w-full" floatLabel="always">
+                                        <mat-label>Skype Link</mat-label>
+                                        <input
+                                            matInput
+                                            maxlength="200"
+                                            [formControlName]="'SkypeLink'"
+                                            placeholder="Enter Skype Link">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+
+                        <button
+                            class="mr-2 rounded my-10"
+                            style="background-color: #808382 !important; color: white !important;"
+                            mat-stroked-button (click)="onSubmit()">
+                            <mat-icon style="color: white !important;">add</mat-icon>
+                            Submit
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

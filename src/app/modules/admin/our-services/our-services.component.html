@@ -5,16 +5,16 @@
             <div class="flex flex-col px-8 sm:flex-row flex-auto sm:items-center min-w-0 my-4 sm:my-4">
                 <div class="flex flex-auto items-center min-w-0">
                     <div class="text-2xl font-semibold md:text-2xl tracking-tight leading-7 md:leading-snug truncate">
-                        <b>Dashboard</b>
+                        <b>Services</b>
                     </div>
                 </div>
                 <!--Actions -->
                 <button
                     class="mr-2"
                     style="background-color: #808382 !important; color: white !important;"
-                    mat-stroked-button routerLink="/dashboard/add">
+                    mat-stroked-button routerLink="/service/add">
                     <mat-icon style="color: white !important;">add</mat-icon>
-                    Add Dashboard
+                    Add Service
                 </button>
             </div>
         </div>
@@ -77,7 +77,7 @@
                             <button mat-icon-button
                                     matTooltip="Click to Update"
                                     class="iconbutton"
-                                    [routerLink]="['/dashboard/update',element.Id]">
+                                    [routerLink]="['/service/update',element.Id]">
                                 <mat-icon style="color: #808382 !important">edit</mat-icon>
                             </button>
                         </td>

@@ -13,7 +13,7 @@ import {environment} from "../../../../../environments/environment";
 import {ViewFileComponent} from "../../../../shared/SharedComponent/view-file/view-file.component";
 
 @Component({
-  selector: 'app-add-about-us',
+  selector: 'app-add-company-detail',
   templateUrl: './add-dashboard.component.html',
   styleUrls: ['./add-dashboard.component.scss']
 })

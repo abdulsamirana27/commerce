@@ -13,7 +13,7 @@ import {GenericService} from "../../../../services/generic.service";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-add-about-us',
+  selector: 'app-add-company-detail',
   templateUrl: './add-gallery.component.html',
   styleUrls: ['./add-gallery.component.scss']
 })

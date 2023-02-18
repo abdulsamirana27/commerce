@@ -15,14 +15,14 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { SharedModule } from 'app/shared/shared.module';
 import {MatPaginatorModule} from "@angular/material/paginator";
-import {ReviewsComponent} from "./reviews.component";
-import {productsRoutes} from "./reviews.routing";
-import {AddReviewComponent} from "./add-reviews/add-review.component";
+import {CompanyDetailComponent} from "./company-detail.component";
+import {productsRoutes} from "./company-detail.routing";
+import {AddCompanyDetailComponent} from "./add-company-detail/add-company-detail.component";
 
 @NgModule({
     declarations: [
-        ReviewsComponent,
-        AddReviewComponent
+        CompanyDetailComponent,
+        AddCompanyDetailComponent
     ],
     imports: [
         RouterModule.forChild(productsRoutes),
@@ -43,6 +43,6 @@ import {AddReviewComponent} from "./add-reviews/add-review.component";
         MatPaginatorModule
     ]
 })
-export class ReviewsModule
+export class CompanyDetailModule
 {
 }

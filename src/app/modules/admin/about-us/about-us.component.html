@@ -22,30 +22,30 @@
     <div class="sm:col-span-2 lg:col-span-3  flex flex-col mt-3 my-8 ml-5 mr-5">
         <div class="overflow-x-auto w-full">
 
-            <div class="overflow-auto bg-white border example-container mat-elevation-z8 my-2 py-2">
-                <form [formGroup]="aboutUsForm" class="mx-2">
-                    <div class="col-lg-3">
-                        <mat-form-field class="w-full" floatLabel="always">
-                            <mat-label>Name</mat-label>
-                            <input
-                                matInput
-                                formControlName="Name"
-                                placeholder="Name">
-                        </mat-form-field>
+<!--            <div class="overflow-auto bg-white border example-container mat-elevation-z8 my-2 py-2">-->
+<!--                <form [formGroup]="aboutUsForm" class="mx-2">-->
+<!--                    <div class="col-lg-3">-->
+<!--                        <mat-form-field class="w-full" floatLabel="always">-->
+<!--                            <mat-label>Name</mat-label>-->
+<!--                            <input-->
+<!--                                matInput-->
+<!--                                formControlName="Name"-->
+<!--                                placeholder="Name">-->
+<!--                        </mat-form-field>-->
 
-                    </div>
-                </form>
+<!--                    </div>-->
+<!--                </form>-->
 
-                <div class="flex">
-                    <button
-                        class="mx-2"
-                        style="background-color: #808382 !important; color: white !important;"
-                        mat-stroked-button>
-                        <mat-icon style="color: white !important;">search</mat-icon>
-                        Search
-                    </button>
-                </div>
-            </div>
+<!--                <div class="flex">-->
+<!--                    <button-->
+<!--                        class="mx-2"-->
+<!--                        style="background-color: #808382 !important; color: white !important;"-->
+<!--                        mat-stroked-button>-->
+<!--                        <mat-icon style="color: white !important;">search</mat-icon>-->
+<!--                        Search-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </div>-->
             <div class="overflow-auto bg-white border example-container mat-elevation-z8" #TABLE style="height: 60vh;">
                 <table class="w-full" mat-table #table [dataSource]="dataSource">
                     <ng-container matColumnDef="index">
@@ -107,12 +107,12 @@
             <div>
             </div>
         </div>
-        <div
-            class="bg-white rounded-md shadow mt-4 px-4 py-3 flex items-center justify-between border-gray-200  row-cols-1 row-cols-md-3 g-3">
-            <mat-paginator #MatPaginator [pageSizeOptions]="[10, 20, 30]"
-                           showFirstLastButtons
-                           aria-label="Select page of periodic elements">
-            </mat-paginator>
-        </div>
+<!--        <div-->
+<!--            class="bg-white rounded-md shadow mt-4 px-4 py-3 flex items-center justify-between border-gray-200  row-cols-1 row-cols-md-3 g-3">-->
+<!--            <mat-paginator #MatPaginator [pageSizeOptions]="[10, 20, 30]"-->
+<!--                           showFirstLastButtons-->
+<!--                           aria-label="Select page of periodic elements">-->
+<!--            </mat-paginator>-->
+<!--        </div>-->
     </div>
 </div>

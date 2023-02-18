@@ -2,26 +2,28 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatDialog} from "@angular/material/dialog";
+import {ProductService} from "../../../services/product.service";
 import {finalize} from "rxjs/operators";
 import {NgxSpinnerService} from "ngx-spinner";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {ClientsService} from "../../../services/clients.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {GenericService} from "../../../services/generic.service";
 import {ToastrService} from "ngx-toastr";
 
 
 @Component({
-    selector       : 'our-clients',
-    templateUrl    : './our-clients.component.html',
-    styleUrls: ['./our-clients.component.scss']
+    selector       : 'products',
+    templateUrl    : './our-services.component.html',
+    styleUrls: ['./our-services.component.scss']
 })
-export class OurClientsComponent implements OnInit, OnDestroy
+export class OurServicesComponent implements OnInit, OnDestroy
 {
-    ClientForm: FormGroup;
+    ProductForm: FormGroup;
     products:any;
     displayedColumns: string[] =
         [
             'index',
             'Name',
+            'ShortDescription',
             'action',
         ];
     dataSource = new MatTableDataSource();
@@ -31,8 +33,8 @@ export class OurClientsComponent implements OnInit, OnDestroy
 
     constructor(
         private dialogRef: MatDialog,
-        private clientsService: ClientsService,
-        private toastrService: ToastrService,
+        private genericService:GenericService,
+        private toastrService:ToastrService,
         private spinner: NgxSpinnerService,
         private _formBuilder:FormBuilder,
                  )
@@ -45,20 +47,20 @@ export class OurClientsComponent implements OnInit, OnDestroy
     ngOnInit(): void
     {
         this.createForm()
-        this.getClients();
+        this.getProducts();
 
     }
 
     createForm(){
-        this.ClientForm = this._formBuilder.group({
-            Type: [2],
+        this.ProductForm = this._formBuilder.group({
+            Type: [6],
             Name: [null],
         })
     }
 
-    getClients() {
+    getProducts() {
         this.spinner.show()
-        this.clientsService.getClients(this.ClientForm.value)
+        this.genericService.getProducts(this.ProductForm.value)
             .pipe(
                 finalize(() => {
                     this.spinner.hide()
@@ -66,7 +68,7 @@ export class OurClientsComponent implements OnInit, OnDestroy
             )
             .subscribe(baseResponse => {
                 if (baseResponse.Success) {
-                    this.dataSource = baseResponse.Clients;
+                    this.dataSource = baseResponse.Products;
                     // this.layoutUtilsService.alertElementSuccess("", baseResponse.Message);
                 } else {
                     // this.layoutUtilsService.alertElement("", baseResponse.Message);
@@ -80,7 +82,7 @@ export class OurClientsComponent implements OnInit, OnDestroy
     delete(data) {
         debugger
         this.spinner.show()
-        this.clientsService.deleteClient(data)
+        this.genericService.deleteProducts(data)
             .pipe(
                 finalize(() => {
                     this.spinner.hide()
@@ -89,7 +91,7 @@ export class OurClientsComponent implements OnInit, OnDestroy
             .subscribe(baseResponse => {
                 if (baseResponse.Success) {
                     this.toastrService.success("Deleted successfully","Success")
-                    this.getClients()
+                    this.getProducts()
                 } else {
                     this.toastrService.error("Something went wrong","Error")
                 }
