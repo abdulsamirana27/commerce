@@ -13,9 +13,12 @@ export class FeaturesService {
     }
 
     getFeature(req) {
+        req= {
+            "Id" : "0"
+        }
         return this.http
             .post<any>(
-                `${environment.apiUrl}/Span/api/Review/v1/GetReviews`,{});
+                `${environment.apiUrl}/Span/api/Product/v1/GetFeature`,req);
     }
 
     addFeature(Feature) {
@@ -34,6 +37,17 @@ export class FeaturesService {
         var formData = new FormData();
         formData.append('UserId', this.user["UserId"]);
         formData.append('File', file);
+        return this.http.post<any>(`${environment.apiUrl}/Span/api/Product/v1/AddFeatureIcon`,formData);
+    }
+
+    SaveMedia(file, Data) {
+        debugger
+        var formData = new FormData();
+
+        formData.append('Id', Data.Id);
+        formData.append('UserId', this.user["UserId"]);
+        formData.append('File', file);
+        formData.append('MainIcon', Data.mainIcon);
         return this.http.post<any>(`${environment.apiUrl}/Span/api/Product/v1/AddFeatureIcon`,formData);
     }
 

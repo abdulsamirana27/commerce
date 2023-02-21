@@ -18,6 +18,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {ProductsComponent} from "./products.component";
 import {productsRoutes} from "./products.routing";
 import {AddProductComponent} from "./add-product/add-product.component";
+import {DragDropModule} from "@angular/cdk/drag-drop";
 
 @NgModule({
     declarations: [
@@ -40,6 +41,7 @@ import {AddProductComponent} from "./add-product/add-product.component";
         NgApexchartsModule,
         TranslocoModule,
         SharedModule,
+        DragDropModule,
         MatPaginatorModule
     ]
 })

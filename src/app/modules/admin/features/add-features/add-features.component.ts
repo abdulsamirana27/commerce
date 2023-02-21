@@ -1,7 +1,7 @@
 // Reference
 // https://stackblitz.com/edit/angular-nested-formarray-dynamic-forms-3giycy?file=src%2Fapp%2Fapp.component.ts,src%2Fapp%2Fapp.component.html,src%2Fapp%2Fapp.module.ts
 
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {MatTableDataSource} from "@angular/material/table";
@@ -16,6 +16,7 @@ import {GenericService} from "../../../../services/generic.service";
 import {environment} from "../../../../../environments/environment";
 import {ViewFileComponent} from "../../../../shared/SharedComponent/view-file/view-file.component";
 import {FeaturesService} from "../../../../services/features.service";
+import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'app-add-company-detail',
@@ -23,16 +24,18 @@ import {FeaturesService} from "../../../../services/features.service";
   styleUrls: ['./add-features.component.scss']
 })
 export class AddFeaturesComponent implements OnInit {
-
+noImage= "https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns="
     currentIndex: number = 0;
     baseUrl = environment.apiUrl + "/Span/Documents/";
     subDesc: FormGroup;
     ProductDetailForm: FormGroup;
     Feature: any;
+
+    mainIcon: Images[] = [];
+    mainIconUrl: any[] = [];
+
     images: Images[] = [];
     imageUrl: any[] = [];
-    Icon: Images[] = [];
-    IconUrl: any[] = [];
     featureForm: FormGroup;
     dataSource = new MatTableDataSource();
     @ViewChild('TABLE') table: ElementRef;
@@ -47,6 +50,7 @@ export class AddFeaturesComponent implements OnInit {
                 private spinner: NgxSpinnerService,
                 private route: ActivatedRoute,
                 private _router: Router,
+                private changeDetectorRef: ChangeDetectorRef,
                 private genericService: GenericService
     ) {
     }
@@ -61,8 +65,13 @@ export class AddFeaturesComponent implements OnInit {
         this.getFeature();
 
     }
+clearForm(){
+        debugger
 
-    getFeature() {
+    this.featureForm.reset();
+}
+    Heading
+    getFeature(val=false) {
         this.spinner.show()
         this.featuresService.getFeature(this.featureForm.value)
             .pipe(
@@ -72,71 +81,77 @@ export class AddFeaturesComponent implements OnInit {
             )
             .subscribe(baseResponse => {
                 if (baseResponse.Success) {
-                    // debugger
-                    // this.featureForm.patchValue(baseResponse.Products[0]);
-                    // baseResponse?.Products[0]?.ProductDetails?.forEach((element) => {
-                    //     // this.ProductDetails().push(this.newProductDetails(element.Title, element.Description));
-                    // })
-                    // baseResponse.Products[0]?.GalleryDetails?.forEach((element) => {
-                    //     let single = element;
-                    //     single.GalleryPath = this.baseUrl + element.GalleryPath;
-                    //     this.images.push(element);
-                    //     this.imageUrl.push(single.GalleryPath);
-                    // })
+                    debugger
+                    if(!val) {
+                        this.imageUrl=[];
+                        this.images=[];
+                        this.mainIconUrl=[];
+                        this.mainIcon=[];
+                        this.featureForm.patchValue(baseResponse.Features[0]);
+                        this.mainIconUrl[0] = this.baseUrl + baseResponse.Features[0].MainIcon;
+                        this.mainIcon[0] = baseResponse.Features[0];
+                        this.headings().controls.splice(0, this.headings().length);
+                        baseResponse.Features[0]?.Headings?.forEach((element, index) => {
+                            // this.images.push(element.Icon == "" ? this.noImage : element.Icon);
+                            this.imageUrl.push(element.Icon == "" ? this.noImage : this.baseUrl + element.Icon)
+                            this.headings().push(this.newHeading(element.Id, element.FeatureId, element.Title, element.Icon));
+                            element.Details.forEach((element2) => {
+                                this.HeadingDetails(index).push(this.newDetail(element2.Detail));
+                            })
+                        })
+                    }
+
+                    if(val){
+                        debugger
+                        // {MainIcon:this.baseUrl+baseResponse.Features[0].MainIcon};
+                        this.Heading = [...baseResponse.Features[0].Headings];
+                        this.SaveMedia();
+                    }
                 }
             });
     }
 
-    onSelectFile(event) {
-        if (this.images.length < 1) {
+    onSelectFile(event,index) {
             if (event.target.files && event.target.files[0]) {
                 const Name = event.target.files[0].name.split('.').pop();
                 if (Name != undefined) {
                     if (Name.toLowerCase() == 'jpg' || Name.toLowerCase() == 'jpeg' || Name.toLowerCase() == 'png') {
                         const reader = new FileReader();
                         reader.onload = (event: any) => {
-                            this.imageUrl.push(event.target.result);
+                            this.imageUrl[index]=event.target.result;
                         };
                         reader.readAsDataURL(event.target.files[0]);
                         const imgFile = new Images();
                         imgFile.file = Object.assign(event.target.files[0]);
-                        this.images.push(imgFile);
+                        this.images[index]=imgFile;
                     } else {
                         this.toastrService.error('Only jpeg,jpg and png files are allowed', 'Error');
                         return;
                     }
                 }
             }
-        } else {
-            this.toastrService.error('Maximum 1 Image is allowed', 'Error');
-            return;
-        }
+
     }
 
     onSelectIcon(event) {
-        if (this.Icon.length < 1) {
             if (event.target.files && event.target.files[0]) {
                 const Name = event.target.files[0].name.split('.').pop();
                 if (Name != undefined) {
                     if (Name.toLowerCase() == 'jpg' || Name.toLowerCase() == 'jpeg' || Name.toLowerCase() == 'png') {
                         const reader = new FileReader();
                         reader.onload = (event: any) => {
-                            this.IconUrl.push(event.target.result);
+                            this.mainIconUrl[0]=event.target.result;
                         };
                         reader.readAsDataURL(event.target.files[0]);
                         const imgFile = new Images();
                         imgFile.file = Object.assign(event.target.files[0]);
-                        this.Icon.push(imgFile);
+                        this.mainIcon[0]=imgFile;
                     } else {
                         this.toastrService.error('Only jpeg,jpg and png files are allowed', 'Error');
                         return;
                     }
                 }
             }
-        } else {
-            this.toastrService.error('Maximum 1 Image is allowed', 'Error');
-            return;
-        }
     }
 
     hasError(controlName: string, errorName: string): boolean {
@@ -144,23 +159,80 @@ export class AddFeaturesComponent implements OnInit {
             return this.featureForm.controls[controlName].hasError(errorName);
     }
 
-    ifResetRequired() {
-        this.featureForm.controls['file'].reset();
+    ifResetRequired(index=0) {
+        debugger// @ts-ignore
+        if(this.featureForm?.controls?.Headings?.length) {
+            // @ts-ignore
+            this.featureForm.controls.Headings.controls[index].controls.file.reset();
+        }
     }
 
     onSubmit() {
-        if (this.featureForm.invalid) {
-            for (const control of Object.keys(this.featureForm.controls)) {
-                this.featureForm.controls[control].markAsTouched();
-            }
-            return;
-        }
-        if (this.images.length == 0) {
-            this.toastrService.error("Attach atleast one image", "Error")
+        debugger
+        // if (this.featureForm.invalid) {
+        //     for (const control of Object.keys(this.featureForm.controls)) {
+        //         this.featureForm.controls[control].markAsTouched();
+        //     }
+        //     return;
+        // }
+
+        // @ts-ignore
+        if (this.featureForm.controls.Headings.length != 5) {
+            this.toastrService.error("Minimum 5 headings are required", "Error")
             return
         }
+
+        if (this.mainIconUrl.length != 1) {
+            this.toastrService.error("Attach Main Icon", "Error")
+            return
+        }
+
+        var count = 0;
+        this.imageUrl.forEach((x)=>{
+            if(x!=this.noImage && x!=""){
+                count++;
+            }
+        })
+        // @ts-ignore
+        if (count != this.featureForm.controls.Headings.length) {
+            this.toastrService.error("Attach Icons", "Error")
+            return
+        }
+
         this.Feature = Object.assign({}, this.featureForm.value)
+
         this.spinner.show();
+
+            debugger
+            if (this.mainIconUrl[0].includes('base64')) {
+                debugger
+                this.featuresService
+                 .SaveMedia(this.mainIcon[0].file, {Id: this.featureForm.controls["Id"].value==""?0:this.featureForm.controls["Id"].value,mainIcon:1})
+                    .pipe(finalize(() => {
+                        // this.spinner.hide();
+                    }))
+                    .subscribe((baseResponse) => {
+                        if (baseResponse.Success) {
+                            this.featureForm.controls["Id"].setValue(baseResponse.Feature.Id);
+                            this.saveFeature();
+                        } else {
+                            this.spinner.hide();
+                            // this.layoutUtilsService.alertElement(
+                            //     '',
+                            //     baseResponse.Message,
+                            //     baseResponse.Code = null
+                            // );
+                        }
+                    });
+            }else{
+                this.saveFeature();
+            }
+
+
+
+    }
+    saveFeature(){
+        this.Feature = Object.assign({}, this.featureForm.value)
         this.featuresService.addFeature(this.Feature)
             .pipe(
                 finalize(() => {
@@ -169,42 +241,14 @@ export class AddFeaturesComponent implements OnInit {
             )
             .subscribe(baseResponse => {
                 if (baseResponse.Success) {
-                    this.Feature["Id"] = baseResponse.Feature.Id;
-                    this.SaveMedia()
+                    this.getFeature(true)
                 } else {
                     this.toastrService.error(baseResponse.Message, 'Error');
                 }
             });
-
     }
 
     removeIcon(url, val: number) {
-        debugger
-        if (!url.includes('base64')) {
-            let image: any = this.Icon.find(element => element.GalleryPath == url);
-            this.spinner.show();
-            this.genericService
-                .DeleteMedia(image['Id'])
-                .pipe(finalize(() => {
-                    this.spinner.hide();
-                }))
-                .subscribe((baseResponse) => {
-                    if (baseResponse.Success) {
-                        this.Icon.splice(val, 1);
-                        this.IconUrl.splice(val, 1);
-                        this.toastrService.success("Deleted successfully", "Success")
-                    } else {
-                        this.toastrService.error("Something went wrong", "Error")
-                    }
-                });
-        } else {
-            this.IconUrl.splice(val, 1)
-            this.Icon.splice(val, 1);
-        }
-        this.ifResetRequired()
-    }
-
-    removeImage(url, val: number) {
         debugger
         if (!url.includes('base64')) {
             let image: any = this.images.find(element => element.GalleryPath == url);
@@ -227,16 +271,44 @@ export class AddFeaturesComponent implements OnInit {
             this.imageUrl.splice(val, 1)
             this.images.splice(val, 1);
         }
-        this.ifResetRequired()
+        this.ifResetRequired(val)
+    }
+
+    removeImage(url, val: number) {
+        debugger
+        // if (!url.includes('base64')) {
+        //     let image: any = this.images.find(element => element.GalleryPath == url);
+        //     this.spinner.show();
+        //     this.genericService
+        //         .DeleteMedia(image['Id'])
+        //         .pipe(finalize(() => {
+        //             this.spinner.hide();
+        //         }))
+        //         .subscribe((baseResponse) => {
+        //             if (baseResponse.Success) {
+        //                 this.images.splice(val, 1);
+        //                 this.imageUrl.splice(val, 1);
+        //                 this.toastrService.success("Deleted successfully", "Success")
+        //             } else {
+        //                 this.toastrService.error("Something went wrong", "Error")
+        //             }
+        //         });
+        // } else {
+            this.imageUrl[val]=this.noImage;
+            this.images.splice(val, 1);
+        // }
+        this.ifResetRequired(val)
     }
 
     SaveMedia() {
 
 
         if (this.currentIndex < this.images.length) {
-            if (this.images[this.currentIndex].GalleryPath == undefined) {
-                this.genericService
-                    .SaveMedia(this.images[this.currentIndex].file, {LinkedId: this.Feature.Id, Type: 3})
+            debugger
+            // if (this.images[this.currentIndex].GalleryPath == undefined) {
+                if (this.images[this.currentIndex].file!=undefined){
+                this.featuresService
+                    .SaveMedia(this.images[this.currentIndex].file, {Id: this.Heading[this.currentIndex].Id,mainIcon:0})
                     .pipe(finalize(() => {
                         // this.spinner.hide();
                     }))
@@ -258,8 +330,10 @@ export class AddFeaturesComponent implements OnInit {
                 this.SaveMedia();
             }
         } else {
-            this.spinner.hide()
+            this.currentIndex = 0;
+            this.spinner.hide();
             this.toastrService.success("Uploaded Successfully", "Success");
+            this.getFeature();
         }
     }
 
@@ -275,7 +349,8 @@ export class AddFeaturesComponent implements OnInit {
 
     createform(){
         this.featureForm = this.fb.group({
-            Id:'',
+            Id:null,
+            MainIcon:null,
             Headings: this.fb.array([]),
         });
     }
@@ -284,19 +359,31 @@ export class AddFeaturesComponent implements OnInit {
         return this.featureForm.get('Headings') as FormArray;
     }
 
-    newHeading(Title=''): FormGroup {
+    newHeading(Id=null,FeatureId=null,Title=null,Icon=null): FormGroup {
         return this.fb.group({
+            Id:Id,
+            FeatureId:FeatureId,
             Title: Title,
+            file:null,
+            Icon:Icon,
             Details: this.fb.array([]),
         });
     }
 
     addHeading() {
+        // @ts-ignore
+        if (this.featureForm.controls.Headings.length == 5) {
+            this.toastrService.error("Maximum 5 headings are required", "Error")
+            return
+        }
+
         this.headings().push(this.newHeading());
     }
 
     removeHeading(empIndex: number) {
         this.headings().removeAt(empIndex);
+        this.imageUrl.splice(empIndex,1);
+        this.images.splice(empIndex,1);
     }
 
     HeadingDetails(empIndex: number): FormArray {
@@ -317,6 +404,24 @@ export class AddFeaturesComponent implements OnInit {
         this.HeadingDetails(empIndex).removeAt(skillIndex);
     }
 
+    drop(event: CdkDragDrop<string[]>) {
+        debugger
+        // @ts-ignore
+        if(this.featureForm.controls["Headings"]?.controls.length>1) {
+            moveItemInArray(this.featureForm.value.Headings, event.previousIndex, event.currentIndex);
+            // @ts-ignore
+            moveItemInArray(this.featureForm.controls["Headings"]?.controls, event.previousIndex, event.currentIndex);
+        }
+
+        const fix = this.featureForm.value.Headings;
+        // fix.forEach((element,index)=>{
+        //     this.headings().push(this.newHeading(element.Title));
+        //     element.Details.forEach((element2)=>{
+        //         this.HeadingDetails(index).push(this.newDetail(element2.Detail));
+        //     })
+        // })
+        // this.changeDetectorRef.detectChanges();
+    }
     patchData() {
         const sam = {
             "Id": "",

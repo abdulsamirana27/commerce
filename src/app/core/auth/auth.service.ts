@@ -178,6 +178,7 @@ debugger
      */
     check(): Observable<boolean>
     {
+        debugger
         // Check if the user is logged in
         if ( this._authenticated )
         {

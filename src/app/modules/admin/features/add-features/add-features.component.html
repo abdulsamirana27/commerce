@@ -16,6 +16,7 @@
                         </div>
                     </div>
                 </div>
+                <button (click)="clearForm()">clear form</button>
 
                 <div class="container mt-8">
                     <div class="mt-8">
@@ -79,9 +80,9 @@
                                     <input (change)="onSelectIcon($event)" (click)="ifResetRequired()"
                                            accept="image/jpg, image/jpeg, image/png"
                                            type='file'/>
-                                    <div *ngIf="imageUrl.length>0" class="mt-2 overflow-scroll"
+                                    <div *ngIf="mainIconUrl.length>0" class="mt-2 overflow-scroll"
                                          style="display: flex !important;flex-direction: row !important;flex-wrap: wrap !important;gap: 10px">
-                                        <div *ngFor='let url of imageUrl; let i = index'>
+                                        <div *ngFor='let url of mainIconUrl; let i = index'>
                                             <div class="row">
                                                 <div class="col-lg-12  text-right relative">
                                                     <div class="bg-white float-right">
@@ -113,7 +114,7 @@
                                     <div class="flex flex-auto items-center min-w-0 justify-between">
                                         <div
                                             class="text-2xl font-semibold md:text-2xl tracking-tight leading-7 md:leading-snug truncate">
-                                            <b>Sub Description</b>
+                                            <b>Heading</b>
                                         </div>
 <!--                                        (click)="addProductDetails()"-->
                                         <button
@@ -127,8 +128,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div [formGroup]="featureForm" >
-                            <div formArrayName="Headings">
+<!--                        <div cdkDropList [formGroup]="featureForm" (cdkDropListDropped)="drop($event)">-->
+<!--                            <div  formArrayName="Headings" >-->
+<!--                                <div *ngFor="let employee of headings().controls; let empIndex = index" cdkDrag>-->
+                        <div  [formGroup]="featureForm">
+                            <div  formArrayName="Headings" >
                                 <div *ngFor="let employee of headings().controls; let empIndex = index">
                                     <div class="row shadow rounded p-5 mx-2 mb-3 pt-3"
                                         [formGroupName]="empIndex"
@@ -152,9 +156,36 @@
                                             </button>
                                         </div>
 
+                                        <div class="col-lg-12 col-sm-12">
+                                            <input (change)="onSelectFile($event,empIndex)" (click)="ifResetRequired(empIndex)"
+                                                   accept="image/jpg, image/jpeg, image/png"
+                                                   type='file'/>
+                                            <div *ngIf="imageUrl.length>0 && imageUrl[empIndex] != this.noImage" class="mt-2 overflow-scroll"
+                                                 style="display: flex !important;flex-direction: row !important;flex-wrap: wrap !important;gap: 10px">
+                                                    <div class="row">
+                                                        <div class="col-lg-12  text-right relative">
+                                                            <div class="bg-white float-right">
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--  (click)="previewImg(url)" -->
+                                                    <div style="width: 240px; position: relative;">
+                                                        <img (click)="previewImg(imageUrl[empIndex])" [src]="imageUrl[empIndex]">
+                                                        <button type="button" (click)="removeImage(imageUrl[empIndex],empIndex)"
+                                                                class="close-button float-right absolute right-1 top-0 bg-red-500"
+                                                                mat-icon-button>
+                                                            <!-- X -->
+                                                            <mat-icon class="close-icon w-12 h-12 text-white bg-danger">
+                                                                close
+                                                            </mat-icon>
+                                                        </button>
+                                                    </div>
+                                            </div>
+                                        </div>
+
                                         <div formArrayName="Details">
-                                            <div
-                                                *ngFor="let skill of HeadingDetails(empIndex).controls;let skillIndex = index">
+                                            <div *ngFor="let skill of HeadingDetails(empIndex).controls;let skillIndex = index">
                                                 <div class="row shadow rounded p-5 mb-3 pt-3" style="border: 1px solid blue;" [formGroupName]="skillIndex">
                                                     <div class="col-lg-6">
                                                         <mat-form-field class="w-full" floatLabel="always">
@@ -193,17 +224,18 @@
                             <mat-icon style="color: white !important;">add</mat-icon>
                             Submit
                         </button>
-                        <button
-                            class="mr-2 rounded my-10"
-                            style="background-color: #808382 !important; color: white !important;"
-                            mat-stroked-button (click)="patchData()">
-                            <mat-icon style="color: white !important;">add</mat-icon>
-                            patch Data
-                        </button>
+<!--                        <button-->
+<!--                            class="mr-2 rounded my-10"-->
+<!--                            style="background-color: #808382 !important; color: white !important;"-->
+<!--                            mat-stroked-button (click)="patchData()">-->
+<!--                            <mat-icon style="color: white !important;">add</mat-icon>-->
+<!--                            patch Data-->
+<!--                        </button>-->
                 </div>
 
             </div>
         </div>
 
     </div>
+</div>
 </div>

@@ -101,6 +101,65 @@
                                 </div>
                             </div>
                             <div class="row mt-8">
+                                <div class="col-lg-3">
+                                    <mat-form-field class="w-full" floatLabel="always">
+                                        <mat-label>Projects</mat-label>
+                                        <input
+                                            matInput
+                                            appNumberOnly
+                                            maxlength="200"
+                                            [formControlName]="'Projects'"
+                                            placeholder="Enter Projects">
+                                    </mat-form-field>
+                                    <!--                                    <mat-error *ngIf="hasError('Projects', 'pattern')">pattern-->
+                                    <!--                                        <strong>required</strong>-->
+                                    <!--                                    </mat-error>-->
+                                </div>
+                                <div class="col-lg-3">
+                                    <mat-form-field class="w-full" floatLabel="always">
+                                        <mat-label>Happy Clients</mat-label>
+                                        <input
+                                            matInput
+                                            appNumberOnly
+                                            maxlength="200"
+                                            [formControlName]="'HappyClients'"
+                                            placeholder="Enter Happy Clients">
+                                    </mat-form-field>
+                                    <!--                                    <mat-error *ngIf="hasError('HappyClients', 'pattern')">pattern-->
+                                    <!--                                        <strong>required</strong>-->
+                                    <!--                                    </mat-error>-->
+                                </div>
+                                <div class="col-lg-3">
+                                    <mat-form-field class="w-full" floatLabel="always">
+                                        <mat-label>Client Countries</mat-label>
+                                        <input
+                                            matInput
+                                            appNumberOnly
+                                            maxlength="200"
+                                            [formControlName]="'ClientCountries'"
+                                            placeholder="Enter Client Countries">
+                                    </mat-form-field>
+                                    <!--                                    <mat-error *ngIf="hasError('ClientCountries', 'pattern')">pattern-->
+                                    <!--                                        <strong>required</strong>-->
+                                    <!--                                    </mat-error>-->
+                                </div>
+                                <div class="col-lg-3">
+                                    <mat-form-field class="w-full" floatLabel="always">
+                                        <mat-label>Partners</mat-label>
+                                        <input
+                                            matInput
+                                            appNumberOnly
+                                            maxlength="200"
+                                            [formControlName]="'Partners'"
+                                            placeholder="Enter Partners">
+                                    </mat-form-field>
+                                    <!--                                    <mat-error *ngIf="hasError('HappyClients', 'pattern')">pattern-->
+                                    <!--                                        <strong>required</strong>-->
+                                    <!--                                    </mat-error>-->
+                                </div>
+                            </div>
+
+                            <div class="row mt-8">
                                 <div class="col-lg-12">
                                     <mat-form-field class="w-full" floatLabel="always">
                                         <mat-label>Contact Text</mat-label>

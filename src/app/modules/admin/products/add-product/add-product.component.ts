@@ -11,6 +11,7 @@ import { GenericService } from 'app/services/generic.service';
 import {ActivatedRoute, Router} from "@angular/router";
 import {environment} from "../../../../../environments/environment";
 import {ViewFileComponent} from "../../../../shared/SharedComponent/view-file/view-file.component";
+import {CdkDragDrop, moveItemInArray} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'app-add-company-detail',
@@ -251,6 +252,15 @@ export class AddProductComponent implements OnInit {
             height: '70%',
             data: {url: url}
         });
+    }
+
+    drop(event: CdkDragDrop<string[]>) {
+        debugger
+        if(this.images.length>1) {
+            moveItemInArray(this.images, event.previousIndex, event.currentIndex);
+            moveItemInArray(this.imageUrl, event.previousIndex, event.currentIndex);
+        }
+
     }
 
 }
