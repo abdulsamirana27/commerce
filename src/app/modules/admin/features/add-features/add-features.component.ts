@@ -250,27 +250,27 @@ clearForm(){
 
     removeIcon(url, val: number) {
         debugger
-        if (!url.includes('base64')) {
-            let image: any = this.images.find(element => element.GalleryPath == url);
-            this.spinner.show();
-            this.genericService
-                .DeleteMedia(image['Id'])
-                .pipe(finalize(() => {
-                    this.spinner.hide();
-                }))
-                .subscribe((baseResponse) => {
-                    if (baseResponse.Success) {
-                        this.images.splice(val, 1);
-                        this.imageUrl.splice(val, 1);
-                        this.toastrService.success("Deleted successfully", "Success")
-                    } else {
-                        this.toastrService.error("Something went wrong", "Error")
-                    }
-                });
-        } else {
-            this.imageUrl.splice(val, 1)
-            this.images.splice(val, 1);
-        }
+        // if (!url.includes('base64')) {
+        //     let image: any = this.images.find(element => element.GalleryPath == url);
+        //     this.spinner.show();
+        //     this.genericService
+        //         .DeleteMedia(image['Id'])
+        //         .pipe(finalize(() => {
+        //             this.spinner.hide();
+        //         }))
+        //         .subscribe((baseResponse) => {
+        //             if (baseResponse.Success) {
+        //                 this.images.splice(val, 1);
+        //                 this.imageUrl.splice(val, 1);
+        //                 this.toastrService.success("Deleted successfully", "Success")
+        //             } else {
+        //                 this.toastrService.error("Something went wrong", "Error")
+        //             }
+        //         });
+        // } else {
+            this.mainIconUrl.splice(val, 1)
+            this.mainIcon.splice(val, 1);
+        // }
         this.ifResetRequired(val)
     }
 
