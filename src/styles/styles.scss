@@ -209,3 +209,9 @@ fuse-vertical-navigation fuse-vertical-navigation-aside-item .fuse-vertical-navi
     text-decoration: none;
     border-radius: 6px;
 }
+
+.title-input{
+    .mat-form-field-wrapper{
+        margin-bottom: 0px !important;
+    }
+}

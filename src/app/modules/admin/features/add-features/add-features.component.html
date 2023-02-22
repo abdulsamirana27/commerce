@@ -78,7 +78,7 @@
                                     <input (change)="onSelectIcon($event)" (click)="ifResetRequired()"
                                            accept="image/jpg, image/jpeg, image/png"
                                            type='file'/>
-                                    <div *ngIf="mainIconUrl.length>0" class="mt-2 overflow-scroll"
+                                    <div *ngIf="mainIconUrl.length>0" class="mt-2 "
                                          style="display: flex !important;flex-direction: row !important;flex-wrap: wrap !important;gap: 10px">
                                         <div *ngFor='let url of mainIconUrl; let i = index'>
                                             <div class="row">
@@ -111,8 +111,8 @@
                                 <div class="flex flex-col sm:flex-row flex-auto sm:items-center min-w-0 my-4 sm:my-4">
                                     <div class="flex flex-auto items-center min-w-0 justify-between">
                                         <div
-                                            class="text-2xl font-semibold md:text-2xl tracking-tight leading-7 md:leading-snug truncate">
-                                            <b>Heading</b>
+                                            class="text-3xl p-3 w-75 bg-gray-100 font-semibold md:text-2xl tracking-tight leading-7 md:leading-snug truncate" style="border-bottom: 2px solid #dc2626">
+                                            <b>Headings:</b>
                                         </div>
 <!--                                        (click)="addProductDetails()"-->
                                         <button
@@ -132,60 +132,82 @@
                         <div  [formGroup]="featureForm">
                             <div  formArrayName="Headings" >
                                 <div *ngFor="let employee of headings().controls; let empIndex = index">
-                                    <div class="row shadow rounded p-5 mx-2 mb-3 pt-3"
-                                        [formGroupName]="empIndex"
-                                        style="border: 1px solid blue;">
-                                        <div class="col-lg-6">
-                                            <mat-form-field class="w-full" floatLabel="always">
+
+                                    <div class=" shadow rounded border p-5 bg-gray-50 mx-1 mb-6 pt-3"
+                                        [formGroupName]="empIndex">
+
+                                        <div class="row">
+                                            <div class="col-lg-12 text-end">
+                                                <button
+                                                    class="ml-2  "
+                                                    style=" color: white !important;"
+                                                    mat-icon-button (click)="removeHeading(empIndex)">
+                                                    <mat-icon class="text-red-600 text-4xl" >cancel</mat-icon>
+
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                        <div class="col-lg-6  pt-3">
+                                            <b class="text-2xl mb-3">
+                                                Title
+                                            </b>
+                                            <div class="flex" style="align-items: self-end;">
+                                            <mat-form-field class="w-3/4 mt-5 title-input" floatLabel="always">
                                                 <mat-label>{{ empIndex + 1 }} Title:</mat-label>
                                                 <input matInput
                                                        maxlength="500"
                                                        [formControlName]="'Title'"
                                                        placeholder="Title">
                                             </mat-form-field>
-                                        </div>
-                                        <div class="col-lg-6 self-center text-right">
-                                            <button
-                                                class="mr-2 rounded bg-warn w-32"
-                                                style=" color: white !important;"
-                                                mat-stroked-button (click)="removeHeading(empIndex)">
-                                                <mat-icon class="mr-2" style="color: white !important;">cancel</mat-icon>
-                                                Remove
-                                            </button>
-                                        </div>
 
-                                        <div class="col-lg-12 col-sm-12">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 border-l self-center grid  pl-12  mx-auto">
+<div class="flex justify-between">
+                                            <b class="text-2xl mb-6 pt-3">
+                                                Upload Image
+                                            </b>
+
+</div>
+
                                             <input (change)="onSelectFile($event,empIndex)" (click)="ifResetRequired(empIndex)"
                                                    accept="image/jpg, image/jpeg, image/png"
                                                    type='file'/>
-                                            <div *ngIf="imageUrl.length>0 && imageUrl[empIndex] != this.noImage" class="mt-2 overflow-scroll"
+                                            <div *ngIf="imageUrl.length>0 && imageUrl[empIndex] != this.noImage" class="mt-2 justify-center"
                                                  style="display: flex !important;flex-direction: row !important;flex-wrap: wrap !important;gap: 10px">
-                                                    <div class="row">
-                                                        <div class="col-lg-12  text-right relative">
-                                                            <div class="bg-white float-right">
+                                                <div class="row">
+                                                    <div class="col-lg-12  text-right relative">
+                                                        <div class="bg-white float-right">
 
-                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <!--  (click)="previewImg(url)" -->
-                                                    <div style="width: 240px; position: relative;">
-                                                        <img (click)="previewImg(imageUrl[empIndex])" [src]="imageUrl[empIndex]">
-                                                        <button type="button" (click)="removeImage(imageUrl[empIndex],empIndex)"
-                                                                class="close-button float-right absolute right-1 top-0 bg-red-500"
-                                                                mat-icon-button>
-                                                            <!-- X -->
-                                                            <mat-icon class="close-icon w-12 h-12 text-white bg-danger">
-                                                                close
-                                                            </mat-icon>
-                                                        </button>
-                                                    </div>
+                                                </div>
+                                                <!--  (click)="previewImg(url)" -->
+                                                <div style="width: 240px; position: relative;">
+                                                    <img (click)="previewImg(imageUrl[empIndex])" [src]="imageUrl[empIndex]">
+                                                    <button type="button" (click)="removeImage(imageUrl[empIndex],empIndex)"
+                                                            class="close-button float-right absolute right-1 top-0 bg-red-500"
+                                                            mat-icon-button>
+                                                        <!-- X -->
+                                                        <mat-icon class="close-icon w-12 h-12 text-white bg-danger">
+                                                            close
+                                                        </mat-icon>
+                                                    </button>
+                                                </div>
                                             </div>
+
+                                        </div>
                                         </div>
 
-                                        <div formArrayName="Details">
+                                        <div formArrayName="Details" class="border-top pt-2 mt-5">
+                                            <b class="text-2xl pt-4 mb-3">
+                                                Description
+                                            </b>
                                             <div *ngFor="let skill of HeadingDetails(empIndex).controls;let skillIndex = index">
-                                                <div class="row shadow rounded p-5 mb-3 pt-3" style="border: 1px solid blue;" [formGroupName]="skillIndex">
-                                                    <div class="col-lg-6">
+                                                <div class="row rounded px-5 py-5"  [formGroupName]="skillIndex">
+                                                    <div class="col-lg-10 px-0">
                                                         <mat-form-field class="w-full" floatLabel="always">
                                                             <mat-label>{{ skillIndex + 1 }} Detail:</mat-label>
                                                             <input matInput
@@ -194,7 +216,7 @@
                                                                    placeholder="Detail">
                                                         </mat-form-field>
                                                     </div>
-                                                    <div class="col-lg-6 self-center text-right">
+                                                    <div class="col-lg-2 self-center text-right">
                                                         <button
                                                             class="mr-2 rounded bg-warn w-32"
                                                             style=" color: white !important;"
@@ -206,9 +228,15 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <button type="button" (click)="addHeadingDetail(empIndex)">
-                                            Add Detail
-                                        </button>
+
+                                        <div class="row">
+                                            <div class="col-lg-12 text-center">
+                                                <button type="button" class="text-gray-600 font-bold" (click)="addHeadingDetail(empIndex)">
+                                                    Add Detail
+                                                </button>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
 
