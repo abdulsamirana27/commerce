@@ -18,12 +18,21 @@ export class GenericService {
     SaveMedia(file, Data) {
         debugger
         var formData = new FormData();
-
         formData.append('LinkedId', Data.LinkedId);
         formData.append('Type', Data.Type);
+        formData.append('IsDefault', Data.IsDefault??0);
         formData.append('UserId', this.user["UserId"]);
         formData.append('File', file);
         return this.http.post<any>(`${environment.apiUrl}/Span/api/Gallery/v1/AddGalleryData`,formData);
+    }
+
+    updateMedia(Data) {
+        debugger
+        var formData = new FormData();
+        formData.append('Id', Data.Id);
+        formData.append('IsDefault', Data.IsDefault??0);
+        formData.append('UserId', this.user["UserId"]);
+        return this.http.post<any>(`${environment.apiUrl}/Span/api/Gallery/v1/UpdateDefaultIcon`,formData);
     }
 
     DeleteMedia(Id) {

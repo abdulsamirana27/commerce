@@ -100,12 +100,16 @@
                                             <div style="width: 240px; position: relative;">
                                                 <img (click)="previewImg(url)" [src]="url">
                                             </div>
+                                            <div class="row">
+                                                <mat-checkbox [checked]="isCheck(i)" (change)="changeCheck($event,i,url)">
+                                                    Default Image
+                                                </mat-checkbox>
+                                            </div>
                                         </div>
                                     </div>
                                    </div>
                                 </div>
                             </div>
-
                         </div>
                         <button
                             class="mr-2 mb-4"

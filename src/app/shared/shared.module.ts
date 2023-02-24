@@ -12,6 +12,7 @@
     import {HttpResponseHandler} from "./generic-service/handle-error.service";
     import {NgDirectivesModule } from "ng-directives";
     import {ViewFileComponent} from "./SharedComponent/view-file/view-file.component";
+    import {MatCheckboxModule} from "@angular/material/checkbox";
 
     @NgModule({
         declarations:
@@ -30,7 +31,8 @@
             MatIconModule,
             MatInputModule,
             MatButtonModule,
-            NgDirectivesModule
+            NgDirectivesModule,
+            MatCheckboxModule
         ],
         exports: [
             CommonModule,
@@ -42,7 +44,8 @@
             MatButtonModule,
             NgDirectivesModule,
             NumberOnlyDirective,
-            AlphaNumericFieldDirective
+            AlphaNumericFieldDirective,
+            MatCheckboxModule
 
         ],
         providers:[DataService,HttpResponseHandler]

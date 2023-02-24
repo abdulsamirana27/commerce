@@ -96,6 +96,7 @@ export class AddOurServicesComponent implements OnInit {
                         reader.readAsDataURL(event.target.files[0]);
                         const imgFile = new Images();
                         imgFile.file = Object.assign(event.target.files[0]);
+                        imgFile["IsDefault"]="0";
                         this.images.push(imgFile);
 
                     } else {
@@ -136,6 +137,17 @@ export class AddOurServicesComponent implements OnInit {
             this.toastrService.error("Attach atleast one image","Error")
             return
         }
+        var count= 0;
+        this.images.forEach((x)=>{
+            if(x.IsDefault=="1"){
+                count++;
+            }
+        })
+        if(count==0){
+            this.toastrService.error("Please Select Default Image","Error")
+            return
+        }
+
         this.Product = Object.assign({},this.ProductForm.value)
         this.spinner.show();
         this.productService.addProducts(this.Product)
@@ -242,6 +254,35 @@ export class AddOurServicesComponent implements OnInit {
             height: '70%',
             data: {url: url}
         });
+    }
+    isCheck(index){
+        if(this.images[index].IsDefault=="1"){return true;} else {return false;}
+    }
+
+    changeCheck(event, index,url){
+        event.checked == true ? this.images[index].IsDefault = "1":this.images[index].IsDefault = "0";
+        if (!url.includes('base64')) {
+            debugger
+            var def="0";
+            if(event.checked == true) {
+                def="1"
+            }else {
+                def="0"
+            }
+            this.genericService
+                .updateMedia( {Id: this.images[index].Id,IsDefault:def})
+                .pipe(finalize(() => {
+                }))
+                .subscribe((baseResponse) => {
+                    if (baseResponse.Success) {
+                    }
+                });
+        }
+
+        this.images?.forEach((element,i)=>{
+            if(i!=index)
+                element.IsDefault = "0";
+        })
     }
 
 }

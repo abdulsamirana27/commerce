@@ -42,7 +42,8 @@ import {DragDropModule} from "@angular/cdk/drag-drop";
         TranslocoModule,
         SharedModule,
         DragDropModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+
     ]
 })
 export class ProductsModule

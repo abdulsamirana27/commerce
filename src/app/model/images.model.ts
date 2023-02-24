@@ -4,4 +4,5 @@ export class Images {
     GalleryPath: any;
     MainIcon:any;
     Icon:any;
+    IsDefault:any;
 }

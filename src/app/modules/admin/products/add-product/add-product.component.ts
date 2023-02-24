@@ -67,6 +67,7 @@ export class AddProductComponent implements OnInit {
             ShortDescription: [null, [Validators.required]],
             LongDescription: [null, [Validators.required]],
             file: [null],
+            GalleryDetails:[],
             Type: [2],
         })
     }
@@ -104,6 +105,7 @@ export class AddProductComponent implements OnInit {
                         reader.readAsDataURL(event.target.files[0]);
                         const imgFile = new Images();
                         imgFile.file = Object.assign(event.target.files[0]);
+                        imgFile["IsDefault"]="0";
                         this.images.push(imgFile);
 
                     } else {
@@ -144,6 +146,17 @@ export class AddProductComponent implements OnInit {
             this.toastrService.error("Attach atleast one image","Error")
             return
         }
+        var count= 0;
+        this.images.forEach((x)=>{
+            if(x.IsDefault=="1"){
+                count++;
+            }
+        })
+        if(count==0){
+            this.toastrService.error("Please Select Default Image","Error")
+            return
+        }
+
         debugger
         this.Product = Object.assign({},this.ProductForm.value)
         this.spinner.show();
@@ -179,6 +192,7 @@ export class AddProductComponent implements OnInit {
                     if (baseResponse.Success) {
                         this.images.splice(val, 1);
                         this.imageUrl.splice(val, 1);
+                        this.ProductForm.controls["GalleryDetails"].value?.splice(val, 1);
                         this.toastrService.success("Deleted successfully","Success")
                     } else {
                         this.toastrService.error("Something went wrong","Error")
@@ -187,6 +201,7 @@ export class AddProductComponent implements OnInit {
         } else {
             this.imageUrl.splice(val,1)
             this.images.splice(val, 1);
+
         }
         this.ifResetRequired()
     }
@@ -206,6 +221,7 @@ export class AddProductComponent implements OnInit {
                     baseResponse.Products[0]?.GalleryDetails?.forEach((element)=>{
                         let single = element;
                         single.GalleryPath=this.baseUrl+element.GalleryPath;
+                        debugger
                         this.images.push(element);
                         this.imageUrl.push(single.GalleryPath);
                     })
@@ -218,7 +234,7 @@ export class AddProductComponent implements OnInit {
         if (this.currentIndex < this.images.length) {
             if (this.images[this.currentIndex].GalleryPath == undefined) {
                 this.genericService
-                    .SaveMedia(this.images[this.currentIndex].file, {LinkedId:this.Product.Id,Type:2})
+                    .SaveMedia(this.images[this.currentIndex].file, {LinkedId:this.Product.Id,Type:2,IsDefault:this.images[this.currentIndex].IsDefault})
                     .pipe(finalize(() => {
                         // this.spinner.hide();
                     }))
@@ -252,6 +268,36 @@ export class AddProductComponent implements OnInit {
             height: '70%',
             data: {url: url}
         });
+    }
+
+    isCheck(index){
+           if(this.images[index].IsDefault=="1"){return true;} else {return false;}
+    }
+
+    changeCheck(event, index,url){
+        event.checked == true ? this.images[index].IsDefault = "1":this.images[index].IsDefault = "0";
+        if (!url.includes('base64')) {
+            debugger
+            var def="0";
+           if(event.checked == true) {
+               def="1"
+           }else {
+               def="0"
+           }
+            this.genericService
+                .updateMedia( {Id: this.images[index].Id,IsDefault:def})
+                .pipe(finalize(() => {
+                }))
+                .subscribe((baseResponse) => {
+                    if (baseResponse.Success) {
+                    }
+                });
+        }
+
+        this.images?.forEach((element,i)=>{
+            if(i!=index)
+            element.IsDefault = "0";
+        })
     }
 
     drop(event: CdkDragDrop<string[]>) {
