@@ -28,11 +28,8 @@ export class GenericService {
 
     updateMedia(Data) {
         debugger
-        var formData = new FormData();
-        formData.append('Id', Data.Id);
-        formData.append('IsDefault', Data.IsDefault??0);
-        formData.append('UserId', this.user["UserId"]);
-        return this.http.post<any>(`${environment.apiUrl}/Span/api/Gallery/v1/UpdateDefaultIcon`,formData);
+        Data['UserId']= this.user["UserId"];
+        return this.http.post<any>(`${environment.apiUrl}/Span/api/Gallery/v1/UpdateDefaultIcon`,Data);
     }
 
     DeleteMedia(Id) {

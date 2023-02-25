@@ -224,7 +224,7 @@ export class AddProjectComponent implements OnInit {
         if (this.currentIndex < this.images.length) {
             if (this.images[this.currentIndex].GalleryPath == undefined) {
                 this.genericService
-                    .SaveMedia(this.images[this.currentIndex].file, {LinkedId:this.Product.Id,Type:1})
+                    .SaveMedia(this.images[this.currentIndex].file, {LinkedId:this.Product.Id,Type:1,IsDefault:this.images[this.currentIndex].IsDefault})
                     .pipe(finalize(() => {
                         // this.spinner.hide();
                     }))
@@ -268,7 +268,7 @@ export class AddProjectComponent implements OnInit {
                 def="0"
             }
             this.genericService
-                .updateMedia( {Id: this.images[index].Id,IsDefault:def})
+                .updateMedia( {Id: this.images[index].Id,IsDefault:def,LinkedId:this.ProductForm.controls["Id"].value})
                 .pipe(finalize(() => {
                 }))
                 .subscribe((baseResponse) => {

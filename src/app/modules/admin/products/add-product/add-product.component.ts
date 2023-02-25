@@ -285,7 +285,7 @@ export class AddProductComponent implements OnInit {
                def="0"
            }
             this.genericService
-                .updateMedia( {Id: this.images[index].Id,IsDefault:def})
+                .updateMedia( {Id: this.images[index].Id,IsDefault:def,LinkedId:this.ProductForm.controls["Id"].value})
                 .pipe(finalize(() => {
                 }))
                 .subscribe((baseResponse) => {
