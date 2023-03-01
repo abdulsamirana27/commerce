@@ -5,6 +5,7 @@ import { catchError, switchMap } from 'rxjs/operators';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
 import {environment} from "../../../environments/environment";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthService
@@ -16,7 +17,8 @@ export class AuthService
      */
     constructor(
         private _httpClient: HttpClient,
-        private _userService: UserService
+        private _userService: UserService,
+        private _router: Router
     )
     {
     }
@@ -191,13 +193,16 @@ debugger
             return of(false);
         }
 
+        // this._router.navigateByUrl("/products");
+                return of(false);
+
         // Check the access token expire date
-        if ( AuthUtils.isTokenExpired(this.accessToken) )
-        {
-            return of(false);
-        }
+        // if ( AuthUtils.isTokenExpired(this.accessToken) )
+        // {
+        //     return of(false);
+        // }
 
         // If the access token exists and it didn't expire, sign in using it
-        return this.signInUsingToken();
+        // return this.signInUsingToken();
     }
 }

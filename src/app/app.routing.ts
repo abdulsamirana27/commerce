@@ -10,7 +10,7 @@ import { InitialDataResolver } from 'app/app.resolvers';
 export const appRoutes: Route[] = [
 
     // Redirect empty path to '/dashboards/project'
-    {path: '', pathMatch : 'full', redirectTo: 'products'},
+    {path: '', pathMatch : 'full', redirectTo: 'sign-in'},
 
     // Redirect signed in user to the '/dashboards/project'
     //
@@ -23,7 +23,6 @@ export const appRoutes: Route[] = [
     {
         path: '',
         canActivate: [NoAuthGuard],
-        canActivateChild: [NoAuthGuard],
         component: LayoutComponent,
         data: {
             layout: 'empty'
@@ -41,7 +40,6 @@ export const appRoutes: Route[] = [
     {
         path: '',
         canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
         component: LayoutComponent,
         data: {
             layout: 'empty'
@@ -68,7 +66,6 @@ export const appRoutes: Route[] = [
     {
         path       : '',
         canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
         component  : LayoutComponent,
         resolve    : {
             initialData: InitialDataResolver,

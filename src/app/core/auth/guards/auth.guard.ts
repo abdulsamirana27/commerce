@@ -7,7 +7,7 @@ import { switchMap } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root'
 })
-export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
+export class AuthGuard implements CanActivate
 {
     /**
      * Constructor
@@ -41,11 +41,13 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
      * @param childRoute
      * @param state
      */
-    canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
-    {
-        const redirectUrl = state.url === '/sign-out' ? '/' : state.url;
-        return this._check(redirectUrl);
-    }
+    // canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
+    // {
+    //     debugger
+    //     const redirectUrl = state.url === '/sign-out' ? '/' : state.url;
+    //
+    //     return this._check(redirectUrl);
+    // }
 
     /**
      * Can load
@@ -53,10 +55,10 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
      * @param route
      * @param segments
      */
-    canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean
-    {
-        return this._check('/');
-    }
+    // canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean
+    // {
+    //     return this._check('/');
+    // }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Private methods
@@ -70,32 +72,50 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad
      */
     private _check(redirectURL: string): Observable<boolean>
     {
+        debugger
         // Check the authentication status
-        // return this._authService.check()
-        //            .pipe(
-        //                switchMap((authenticated) => {
-        //
-        //                    // If the user is not authenticated...
-        //                    if ( !authenticated )
-        //                    {
-        //                        debugger
-        //                        // Redirect to the sign-in page
-        //                        this._router.navigate(['sign-in'], {queryParams: {redirectURL}});
-        //
-        //                        // Prevent the access
-        //                        return of(false);
-        //                    }
-        //
-        //                    // Allow the access
-        //                    return of(true);
-        //                })
-        //            );
-        if(localStorage.getItem("accessToken")){
+        return this._authService.check()
+                   .pipe(
+                       switchMap((authenticated) => {
 
-            return of(true);
-        }
+                           // If the user is not authenticated...
+                           if ( !authenticated )
+                           {
+                               debugger
+                               // Redirect to the sign-in page
+                               this._router.navigate(['sign-in'], {queryParams: {redirectURL}});
 
-        return of(false);
+                               // Prevent the access
+                               return of(false);
+                           }
+
+                           // Allow the access
+                           return of(true);
+                       })
+                   );
+
+
+
+        //
+        // if (redirectURL.includes('/') && !(localStorage.getItem("user"))){
+        //      this._router.navigateByUrl("/sign-in");
+        //     return of(true);
+        // }
+        //
+        // if (redirectURL.includes('/') && (localStorage.getItem("user"))){
+        //     this._router.navigateByUrl("/products");
+        //     return of(true);
+        // }
+        //
+        // if(localStorage.getItem("user")){
+        //     if (redirectURL.includes('sign-in')) {
+        //         // this._router.navigateByUrl("/products");
+        //         return of(false);
+        //     }
+        //     return of(true);
+        // }
+        //
+        // return of(false);
 
     }
 }
